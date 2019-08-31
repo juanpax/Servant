@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Servant
 {
-    public partial class Form1 : Form
+    public partial class TemplateView : Form
     {
-        public Form1()
+        public TemplateView()
         {
             InitializeComponent();
         }

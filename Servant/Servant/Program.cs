@@ -5,25 +5,34 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
-//https://stackoverflow.com/questions/31370634/how-to-sendkeybd-event-unicode-keys-with-c-sharp
-
-
 namespace Servant
 {
     static class Program
     {
-        private const int WH_KEYBOARD_LL = 13;
-        private const int WM_KEYDOWN = 0x0100;
-        //private const int KEYEVENTF_KEYUP = 0x0002;
+        // Key codes
+        private const uint WH_KEYBOARD_LL = 13;
+        private const uint WM_KEYDOWN = 0x0100;
+        private const uint INPUT_KEYBOARD = 1;
+        private const uint KEYEVENTF_KEYUP = 0x0002;
+        private const uint KEYEVENTF_UNICODE = 0x0004;
 
-
+        // Variables to catch the key events
         private static LowLevelKeyboardProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
 
-        // Testing variables
-        static string pattern = "..TEST ";
+        // Variables to paste the template text in the text box
+        private static uint _lastVKCode = 0;
+        private static uint _lastScanCode = 0;
+        private static byte[] _lastKeyState = new byte[255];
+        private static bool _lastIsDead = false;
+
+        // Testing variables, this variables will be get from the View
+        static string templateIdentifier = "..TEST "; //Currently there is a limitation and it is because 
+        //you can not type more keys in between the template identifier, so it is necessary for the tool to type
+        //all the identifier in capital letter or lower case
         static string currentString = "";
-        static string template = "THIS is A TEXT $$! Other text blablaTT*1";
+        static string templateText = "THIS is A TEXT $$! Other text blablaTT*1";
+        //.......................................................................
 
         [STAThread]
         static void Main()
@@ -32,10 +41,12 @@ namespace Servant
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new TemplatesView());
 
             UnhookWindowsHookEx(_hookID);
         }
+
+        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
         private static IntPtr SetHook(LowLevelKeyboardProc proc)
         {
@@ -46,29 +57,24 @@ namespace Servant
             }
         }
 
-        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
-
-        //lParam => Unmanaged memory 
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            // lParam could be a memory position 
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
             {
-                currentString += VKCodeToString((uint)Marshal.ReadInt32(lParam)); //https://stackoverflow.com/questions/10391025/receive-os-level-key-press-events-in-c-sharp-application
+                currentString += VKCodeToString((uint)Marshal.ReadInt32(lParam));
 
-                if (pattern == currentString)
+                if (templateIdentifier == currentString)
                 {
                     UnhookWindowsHookEx(_hookID);
-                    //Missing functionality: Find the template based on the match
 
-                    DeletePatternText();
-
-                    SendTemplateText(template);
-
+                    // Missing functionality: Find the template based on the match
+                    DeleteTemplateIdentifier();
+                    WriteTemplateText(templateText);
                     currentString = "";
+
                     _hookID = SetHook(_proc);
                 }
-                else if (!pattern.StartsWith(currentString))
+                else if (!templateIdentifier.StartsWith(currentString))
                 {
                     currentString = "";
                 }
@@ -77,94 +83,74 @@ namespace Servant
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
 
-        private static void DeletePatternText()
+        /// <summary>
+        /// Method to delete the template identifier from the current writting window
+        /// </summary>
+        private static void DeleteTemplateIdentifier()
         {
-            for (int i = 1; i < pattern.Length; i++) // This is going to delete the test pattern that you typed to get the template
+            for (int i = 1; i < templateIdentifier.Length; i++)
             {
                 keybd_event((byte)'\b', 0, 0, IntPtr.Zero);
                 keybd_event((byte)'\b', 0, KEYEVENTF_KEYUP, IntPtr.Zero);
             }
         }
 
-        //...................................Testing..........................................
-
-        private static uint _lastVKCode = 0;
-        private static uint _lastScanCode = 0;
-        private static byte[] _lastKeyState = new byte[255];
-        private static bool _lastIsDead = false;
-
+        /// <summary>
+        /// Method to get the current key pressed as string format
+        /// </summary>
         public static string VKCodeToString(uint vkCode)
         {
-            // ToUnicodeEx needs StringBuilder, it populates that during execution.
-            var sbString = new System.Text.StringBuilder(5);
-
-            var bKeyState = new byte[255];
+            StringBuilder sbString = new StringBuilder(5);
+            byte[] bKeyState = new byte[255];
             bool bKeyStateStatus;
             bool isDead = false;
-
-            // Gets the current windows window handle, threadID, processID
             IntPtr currentHWnd = GetForegroundWindow();
             uint currentProcessID;
             uint currentWindowThreadID = GetWindowThreadProcessId(currentHWnd, out currentProcessID);
-
-            // This programs Thread ID
             uint thisProgramThreadId = GetCurrentThreadId();
 
-            // Attach to active thread so we can get that keyboard state
             if (AttachThreadInput(thisProgramThreadId, currentWindowThreadID, true))
             {
-                // Current state of the modifiers in keyboard
                 bKeyStateStatus = GetKeyboardState(bKeyState);
-
-                // Detach
                 AttachThreadInput(thisProgramThreadId, currentWindowThreadID, false);
             }
             else
             {
-                // Could not attach, perhaps it is this process?
                 bKeyStateStatus = GetKeyboardState(bKeyState);
             }
 
-            // On failure we return empty string.
             if (!bKeyStateStatus)
                 return "";
 
-            // Gets the layout of keyboard
             IntPtr hkl = GetKeyboardLayout(currentWindowThreadID);
-
-            // Maps the virtual keycode
             uint lScanCode = MapVirtualKeyEx(vkCode, 0, hkl);
-
-
-
-            // Converts the VKCode to unicode
-            int relevantKeyCountInBuffer = ToUnicodeEx(vkCode, lScanCode, bKeyState, sbString, sbString.Capacity, (uint)0, hkl);
-
             string ret = "";
+            int relevantKeyCountInBuffer = ToUnicodeEx(vkCode, lScanCode, bKeyState, sbString, sbString.Capacity, (uint)0, hkl);
 
             switch (relevantKeyCountInBuffer)
             {
                 // Dead keys (^,`...)
                 case -1:
-                    isDead = true;
-
-                    // We must clear the buffer because ToUnicodeEx messed it up, see below.
-                    ClearKeyboardBuffer(vkCode, lScanCode, hkl);
-                    break;
-
+                    {
+                        isDead = true;
+                        ClearKeyboardBuffer(vkCode, lScanCode, hkl);
+                        break;
+                    }
                 case 0:
-                    break;
-
-                // Single character in buffer
+                    {
+                        break;
+                    }
                 case 1:
-                    ret = sbString[0].ToString();
-                    break;
-
-                // Two or more (only two of them is relevant)
+                    {
+                        ret = sbString[0].ToString();
+                        break;
+                    }
                 case 2:
                 default:
-                    ret = sbString.ToString().Substring(0, 2);
-                    break;
+                    {
+                        ret = sbString.ToString().Substring(0, 2);
+                        break;
+                    }
             }
 
             if (_lastVKCode != 0 && _lastIsDead)
@@ -176,7 +162,6 @@ namespace Servant
                 return ret;
             }
 
-            // Save these
             _lastScanCode = lScanCode;
             _lastVKCode = vkCode;
             _lastIsDead = isDead;
@@ -187,135 +172,51 @@ namespace Servant
 
         private static void ClearKeyboardBuffer(uint vk, uint sc, IntPtr hkl)
         {
-            var sb = new System.Text.StringBuilder(10);
+            StringBuilder sb = new StringBuilder(10);
 
             int rc;
             do
             {
-                var lpKeyStateNull = new Byte[255];
+                var lpKeyStateNull = new byte[255];
                 rc = ToUnicodeEx(vk, sc, lpKeyStateNull, sb, sb.Capacity, 0, hkl);
             } while (rc < 0);
         }
 
-
-        [DllImport("User32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-
-        [DllImport("User32.dll")]
-        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
-
-        [DllImport("kernel32.dll")]
-        private static extern uint GetCurrentThreadId();
-
-        [DllImport("user32.dll")]
-        private static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
-
-        [DllImport("user32.dll")]
-        private static extern bool GetKeyboardState(byte[] lpKeyState);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-        private static extern IntPtr GetKeyboardLayout(uint dwLayout);
-
-        [DllImport("user32.dll")]
-        private static extern uint MapVirtualKeyEx(uint uCode, uint uMapType, IntPtr dwhkl);
-
-        [DllImport("user32.dll")]
-        private static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState, [Out, MarshalAs(UnmanagedType.LPWStr)] System.Text.StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
-
-        //............................................................
-
-
-        // Get OS key events to get the key clicked, this is basically like a keylogger 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr GetModuleHandle(string lpModuleName);
-
-        [DllImport("user32.dll")]
-        public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, IntPtr dwExtraInfo);
-
-
-        /// Send Text.............................................................
-        public static void SendTemplateText(string s)
+        /// <summary>
+        /// Method to send the template text to the current writting window
+        /// </summary>
+        public static void WriteTemplateText(string templateText)
         {
-            // Construct list of inputs in order to send them through a single SendInput call at the end.
             List<INPUT> inputs = new List<INPUT>();
 
-            // Loop through each Unicode character in the string.
-            foreach (char c in s)
+            foreach (char letter in templateText)
             {
-                // First send a key down, then a key up.
                 foreach (bool keyUp in new bool[] { false, true })
                 {
-                    // INPUT is a multi-purpose structure which can be used 
-                    // for synthesizing keystrokes, mouse motions, and button clicks.
                     INPUT input = new INPUT
                     {
-                        // Need a keyboard event.
                         type = INPUT_KEYBOARD,
                         u = new InputUnion
                         {
-                            // KEYBDINPUT will contain all the information for a single keyboard event
-                            // (more precisely, for a single key-down or key-up).
                             ki = new KEYBDINPUT
                             {
-                                // Virtual-key code must be 0 since we are sending Unicode characters.
                                 wVk = 0,
-
-                                // The Unicode character to be sent.
-                                wScan = c,
-
-                                // Indicate that we are sending a Unicode character.
-                                // Also indicate key-up on the second iteration.
+                                wScan = letter,
                                 dwFlags = KEYEVENTF_UNICODE | (keyUp ? KEYEVENTF_KEYUP : 0),
-
                                 dwExtraInfo = GetMessageExtraInfo(),
                             }
                         }
                     };
-
-                    // Add to the list (to be sent later).
                     inputs.Add(input);
                 }
             }
 
-            // Send all inputs together using a Windows API call.
             SendInput((uint)inputs.Count, inputs.ToArray(), Marshal.SizeOf(typeof(INPUT)));
         }
 
-        const int INPUT_MOUSE = 0;
-        const int INPUT_KEYBOARD = 1;
-        const int INPUT_HARDWARE = 2;
-        const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
-        const uint KEYEVENTF_KEYUP = 0x0002;
-        const uint KEYEVENTF_UNICODE = 0x0004;
-        const uint KEYEVENTF_SCANCODE = 0x0008;
-        const uint XBUTTON1 = 0x0001;
-        const uint XBUTTON2 = 0x0002;
-        const uint MOUSEEVENTF_MOVE = 0x0001;
-        const uint MOUSEEVENTF_LEFTDOWN = 0x0002;
-        const uint MOUSEEVENTF_LEFTUP = 0x0004;
-        const uint MOUSEEVENTF_RIGHTDOWN = 0x0008;
-        const uint MOUSEEVENTF_RIGHTUP = 0x0010;
-        const uint MOUSEEVENTF_MIDDLEDOWN = 0x0020;
-        const uint MOUSEEVENTF_MIDDLEUP = 0x0040;
-        const uint MOUSEEVENTF_XDOWN = 0x0080;
-        const uint MOUSEEVENTF_XUP = 0x0100;
-        const uint MOUSEEVENTF_WHEEL = 0x0800;
-        const uint MOUSEEVENTF_VIRTUALDESK = 0x4000;
-        const uint MOUSEEVENTF_ABSOLUTE = 0x8000;
-
         struct INPUT
         {
-            public int type;
+            public uint type;
             public InputUnion u;
         }
 
@@ -344,15 +245,10 @@ namespace Servant
         [StructLayout(LayoutKind.Sequential)]
         struct KEYBDINPUT
         {
-            /*Virtual Key code.  Must be from 1-254.  If the dwFlags member specifies KEYEVENTF_UNICODE, wVk must be 0.*/
             public ushort wVk;
-            /*A hardware scan code for the key. If dwFlags specifies KEYEVENTF_UNICODE, wScan specifies a Unicode character which is to be sent to the foreground application.*/
             public ushort wScan;
-            /*Specifies various aspects of a keystroke.  See the KEYEVENTF_ constants for more information.*/
             public uint dwFlags;
-            /*The time stamp for the event, in milliseconds. If this parameter is zero, the system will provide its own time stamp.*/
             public uint time;
-            /*An additional value associated with the keystroke. Use the GetMessageExtraInfo function to obtain this information.*/
             public IntPtr dwExtraInfo;
         }
 
@@ -364,21 +260,54 @@ namespace Servant
             public ushort wParamH;
         }
 
-        [DllImport("user32.dll")]
-        static extern IntPtr GetMessageExtraInfo();
+        // DDL methods to get the pressed key
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr SetWindowsHookEx(uint idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr GetModuleHandle(string lpModuleName);
+
+        [DllImport("user32.dll")]
+        public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, IntPtr dwExtraInfo);
+
+        [DllImport("User32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("User32.dll")]
+        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        [DllImport("kernel32.dll")]
+        private static extern uint GetCurrentThreadId();
+
+        [DllImport("user32.dll")]
+        private static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+
+        [DllImport("user32.dll")]
+        private static extern bool GetKeyboardState(byte[] lpKeyState);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        private static extern IntPtr GetKeyboardLayout(uint dwLayout);
+
+        [DllImport("user32.dll")]
+        private static extern uint MapVirtualKeyEx(uint uCode, uint uMapType, IntPtr dwhkl);
+
+        [DllImport("user32.dll")]
+        private static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState, [Out, MarshalAs(UnmanagedType.LPWStr)] System.Text.StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
+
+        // DDLS methods to write text 
         [DllImport("user32.dll", SetLastError = true)]
         static extern uint SendInput(uint nInputs, INPUT[] pInputs, int cbSize);
 
-
-
-        //..................................................................
-
-
-
-
+        [DllImport("user32.dll")]
+        static extern IntPtr GetMessageExtraInfo();
     }
-
 }
 
 
@@ -400,6 +329,10 @@ namespace Servant
  *  Parece que esta es la solucion: 
  *  https://www.youtube.com/watch?v=f_ZBFJMlhYQ
  *  
+ *  //https://stackoverflow.com/questions/31370634/how-to-sendkeybd-event-unicode-keys-with-c-sharp
+ *  
  *  Esto fue lo que sirvio para parsear bien la tecla al valor 
  *  
+ *  //https://stackoverflow.com/questions/10391025/receive-os-level-key-press-events-in-c-sharp-application
+ *      //lParam => Unmanaged memory 
  */

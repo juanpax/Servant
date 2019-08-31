@@ -1,6 +1,6 @@
 ﻿namespace Servant
 {
-    partial class Form1
+    partial class TemplatesView
     {
         /// <summary>
         /// Required designer variable.
