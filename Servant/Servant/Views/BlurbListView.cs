@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,28 +8,34 @@ namespace Servant
     public partial class BlurbListView : Form
     {
         public static List<string[]> BLURBLIST = BlurbController.GetBlurbList();
-        private static BlurbView newBlurb = new BlurbView();
 
         public BlurbListView()
         {
             InitializeComponent();
-            newBlurb.FormClosed += new FormClosedEventHandler(BlurbView_FormClosed);
         }
 
         // This method is going to refresh the BLURBLIST in general when the Blurb window is closed
         private void BlurbView_FormClosed(object sender, FormClosedEventArgs e)
         {
-            BLURBLIST = BlurbController.GetBlurbList();
+            LoadBlurbList();
         }
 
         private void buttonAddBlurb_Click(object sender, EventArgs e)
         {
-            newBlurb = new BlurbView();
+            BlurbView newBlurb = new BlurbView();
             InitBlurbView(newBlurb, "Add blurb");
         }
 
         private void BlurbListView_Load(object sender, EventArgs e)
         {
+            LoadBlurbList();
+        }
+
+        private void LoadBlurbList()
+        {
+            BLURBLIST = BlurbController.GetBlurbList();
+            listView.Items.Clear();
+
             foreach (string[] blurb in BLURBLIST)
             {
                 ListViewItem item = new ListViewItem(blurb);
@@ -47,6 +52,7 @@ namespace Servant
         private void InitBlurbView(BlurbView newBlurb, string windowTitle)
         {
             newBlurb.labelTitle.Text = windowTitle;
+            newBlurb.FormClosed += new FormClosedEventHandler(BlurbView_FormClosed);
             newBlurb.ShowDialog();
         }
 
@@ -68,10 +74,10 @@ namespace Servant
 
         private void EditBlurb()
         {
-            newBlurb = new BlurbView();
+            BlurbView newBlurb = new BlurbView();
             newBlurb.id = listView.SelectedItems[0].SubItems[0].Text;
             newBlurb.textBoxPattern.Text = listView.SelectedItems[0].SubItems[1].Text;
-            newBlurb.richTextBoxText.Text = listView.SelectedItems[0].SubItems[2].Text;
+            newBlurb.richTextBoxText.Rtf = listView.SelectedItems[0].SubItems[2].Text;
             InitBlurbView(newBlurb, "Edit blurb");
         }
 
@@ -86,12 +92,13 @@ namespace Servant
 
                 if (result)
                 {
-                    MessageBox.Show("Item deleted successfully", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("Item deleted successfully", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
                     MessageBox.Show("Threre was an error deleting the item", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                LoadBlurbList();
             }
         }
     }

@@ -27,8 +27,11 @@ namespace Servant
         private static bool _lastIsDead = false;
 
         private static string currentString = "";
-        private static BlurbListView BlurbListView = new BlurbListView();
+        private static BlurbListView BlurbListView;
 
+        /// <summary>
+        /// Main method
+        /// </summary>
         [STAThread]
         static void Main()
         {
@@ -36,6 +39,7 @@ namespace Servant
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            BlurbListView = new BlurbListView();
             Application.Run(BlurbListView);
 
             UnhookWindowsHookEx(_hookID);
@@ -43,6 +47,9 @@ namespace Servant
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
+        /// <summary>
+        /// Method to bind the hook event
+        /// </summary>
         private static IntPtr SetHook(LowLevelKeyboardProc proc)
         {
             using (Process curProcess = Process.GetCurrentProcess())
@@ -52,11 +59,15 @@ namespace Servant
             }
         }
 
+        /// <summary>
+        /// This is method is going to be triggered when the user press any key
+        /// </summary>
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
             {
                 currentString += VKCodeToString((uint)Marshal.ReadInt32(lParam));
+                bool foundPatternMatch = false;
 
                 foreach (string[] blurb in BlurbListView.BLURBLIST)
                 {
@@ -71,11 +82,18 @@ namespace Servant
                         currentString = "";
 
                         _hookID = SetHook(_proc);
+                        break;
                     }
-                    else if (!pattern.StartsWith(currentString))
+                    else if (pattern.StartsWith(currentString))
                     {
-                        currentString = "";
+                        foundPatternMatch = true;
+                        break;
                     }
+                }
+
+                if (!foundPatternMatch)
+                {
+                    currentString = "";
                 }
             }
 
@@ -169,6 +187,9 @@ namespace Servant
             return ret;
         }
 
+        /// <summary>
+        /// Method to clear the keyboard buffer
+        /// </summary>
         private static void ClearKeyboardBuffer(uint vk, uint sc, IntPtr hkl)
         {
             StringBuilder sb = new StringBuilder(10);

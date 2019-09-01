@@ -15,11 +15,23 @@ namespace Servant
         private void buttonSave_Click(object sender, EventArgs e)
         {
             string pattern = textBoxPattern.Text;
-            string text = richTextBoxText.Text;
+            string text = richTextBoxText.Rtf;
 
             if (ValidateBlurb(pattern, text))
             {
-                BlurbController.SaveBlurb(id, pattern, text);
+                bool result = BlurbController.SaveBlurb(id, pattern, text);
+
+                if (result)
+                {
+                    string[] newBlurb = BlurbController.GetBlurb(pattern);
+                    id = newBlurb[0];
+
+                    MessageBox.Show("Item added successfully", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Threre was an error adding the item", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
@@ -29,7 +41,7 @@ namespace Servant
 
         private void buttonReset_Click(object sender, EventArgs e)
         {
-            richTextBoxText.Text = "";
+            richTextBoxText.Rtf = "";
         }
 
         private bool ValidateBlurb(string pattern, string text)

@@ -8,6 +8,25 @@ namespace Servant
 {
     public static class BlurbModel
     {
+        /// <summary>
+        /// Method to get an specific blurb based on a pattern 
+        /// </summary>
+        public static string[] GetBlurb(string pattern)
+        {
+            string query = "SELECT * FROM BLURB WHERE PATTERN = '" + pattern + "'";
+            DataTable result = DBConnection.SELECT(query);
+            DataRow firstRow = result.AsEnumerable().FirstOrDefault();
+            string[] blurb = new string[] {
+                                            Convert.ToString(firstRow["ID"]),
+                                            Convert.ToString(firstRow["PATTERN"]),
+                                            Convert.ToString(firstRow["TEXT"])
+                                          };
+            return blurb;
+        }
+
+        /// <summary>
+        /// Method to get all the list of blurb in the database
+        /// </summary>
         public static List<string[]> GetBlurbList()
         {
             string query = "SELECT * FROM BLURB";
@@ -16,15 +35,22 @@ namespace Servant
             return DataTableToList(result);
         }
 
+        /// <summary>
+        /// Method to save or update a blurb
+        /// </summary>
         public static bool SaveBlurb(string id, string pattern, string text)
         {
+            text = text.Replace("'", "''");
             string query =
-                (id == "") ? "INSERT INTO BLURB (PATTERN, TEXT) VALUES ('" + pattern + "', '" + text + "')" :
-                "UPDATE BLURB SET PATTERN = '" + pattern + "', " + "TEXT = '" + text + "' WHERE ID = " + id;
+                (id == "") ? string.Format(@"INSERT INTO BLURB (PATTERN, TEXT) VALUES ('{0}', '{1}')", pattern, text) :
+                string.Format("UPDATE BLURB SET PATTERN = '{0}', TEXT = '{1}' WHERE ID = {2}", pattern, text, id);
 
             return DBConnection.INSERT(query);
         }
 
+        /// <summary>
+        /// Method to delete an existing blurb based on its Id
+        /// </summary>
         public static bool DeleteBlurb(string id)
         {
             string query = "DELETE FROM BLURB WHERE ID = " + id;
@@ -32,6 +58,9 @@ namespace Servant
             return DBConnection.DELETE(query);
         }
 
+        /// <summary>
+        /// Method to parse the datatable result from the query to string[]
+        /// </summary>
         private static List<string[]> DataTableToList(DataTable datatable)
         {
             List<string[]> blurbList = (from rw in datatable.AsEnumerable()

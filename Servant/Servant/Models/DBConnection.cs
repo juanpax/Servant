@@ -7,8 +7,12 @@ namespace Servant.Models
 {
     public static class DBConnection
     {
+        // SQL connection coming from the App.config file
         private static SQLiteConnection SQLiteConnection = new SQLiteConnection(ConfigurationManager.ConnectionStrings["Default"].ConnectionString);
 
+        /// <summary>
+        /// Method to execute a select request
+        /// </summary>
         public static DataTable SELECT(string query)
         {
             DataTable dataTable = new DataTable();
@@ -30,16 +34,25 @@ namespace Servant.Models
             return dataTable;
         }
 
+        /// <summary>
+        /// Method to execute a insert request
+        /// </summary>
         public static bool INSERT(string query)
         {
             return ExecuteQuery(query);
         }
 
+        /// <summary>
+        /// Method to execute a delete request
+        /// </summary>
         public static bool DELETE(string query)
         {
             return ExecuteQuery(query);
         }
 
+        /// <summary>
+        /// Method to execute a query
+        /// </summary>
         private static bool ExecuteQuery(string query)
         {
             try

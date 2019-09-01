@@ -68,7 +68,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(855, 481);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(948, 481);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel1
@@ -80,7 +80,7 @@
             this.panel1.Location = new System.Drawing.Point(20, 5);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(815, 30);
+            this.panel1.Size = new System.Drawing.Size(908, 30);
             this.panel1.TabIndex = 1;
             // 
             // textBoxPattern
@@ -89,7 +89,7 @@
             this.textBoxPattern.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxPattern.Location = new System.Drawing.Point(77, 0);
             this.textBoxPattern.Name = "textBoxPattern";
-            this.textBoxPattern.Size = new System.Drawing.Size(700, 28);
+            this.textBoxPattern.Size = new System.Drawing.Size(793, 28);
             this.textBoxPattern.TabIndex = 1;
             // 
             // pictureBox1
@@ -97,7 +97,7 @@
             this.pictureBox1.BackgroundImage = global::Servant.Properties.Resources.information;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pictureBox1.Location = new System.Drawing.Point(777, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(870, 0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(38, 30);
             this.pictureBox1.TabIndex = 2;
@@ -122,7 +122,7 @@
             this.panel2.Location = new System.Drawing.Point(20, 35);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(815, 30);
+            this.panel2.Size = new System.Drawing.Size(908, 30);
             this.panel2.TabIndex = 3;
             // 
             // buttonReset
@@ -132,7 +132,7 @@
             this.buttonReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonReset.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonReset.ForeColor = System.Drawing.Color.White;
-            this.buttonReset.Location = new System.Drawing.Point(737, 0);
+            this.buttonReset.Location = new System.Drawing.Point(830, 0);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(78, 30);
             this.buttonReset.TabIndex = 4;
@@ -160,7 +160,7 @@
             this.buttonSave.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonSave.ForeColor = System.Drawing.Color.White;
             this.buttonSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSave.Location = new System.Drawing.Point(682, 414);
+            this.buttonSave.Location = new System.Drawing.Point(775, 414);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(150, 44);
             this.buttonSave.TabIndex = 3;
@@ -171,9 +171,10 @@
             // richTextBoxText
             // 
             this.richTextBoxText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxText.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBoxText.Location = new System.Drawing.Point(23, 68);
             this.richTextBoxText.Name = "richTextBoxText";
-            this.richTextBoxText.Size = new System.Drawing.Size(809, 340);
+            this.richTextBoxText.Size = new System.Drawing.Size(902, 340);
             this.richTextBoxText.TabIndex = 4;
             this.richTextBoxText.Text = "";
             // 
@@ -191,7 +192,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(855, 72);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(948, 72);
             this.tableLayoutPanel3.TabIndex = 5;
             // 
             // labelTitle
@@ -199,7 +200,7 @@
             this.labelTitle.AutoSize = true;
             this.labelTitle.Font = new System.Drawing.Font("Century Gothic", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelTitle.ForeColor = System.Drawing.Color.White;
-            this.labelTitle.Location = new System.Drawing.Point(337, 20);
+            this.labelTitle.Location = new System.Drawing.Point(384, 20);
             this.labelTitle.Margin = new System.Windows.Forms.Padding(0, 20, 0, 0);
             this.labelTitle.Name = "labelTitle";
             this.labelTitle.Size = new System.Drawing.Size(151, 34);
@@ -211,7 +212,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(855, 553);
+            this.ClientSize = new System.Drawing.Size(948, 553);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.tableLayoutPanel3);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
