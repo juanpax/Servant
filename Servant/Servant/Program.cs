@@ -20,19 +20,14 @@ namespace Servant
         private static LowLevelKeyboardProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
 
-        // Variables to paste the template text in the text box
+        // Variables to paste the blurb text in the text box
         private static uint _lastVKCode = 0;
         private static uint _lastScanCode = 0;
         private static byte[] _lastKeyState = new byte[255];
         private static bool _lastIsDead = false;
 
-        // Testing variables, this variables will be get from the View
-        static string templateIdentifier = "..TEST "; //Currently there is a limitation and it is because 
-        //you can not type more keys in between the template identifier, so it is necessary for the tool to type
-        //all the identifier in capital letter or lower case
-        static string currentString = "";
-        static string templateText = "THIS is A TEXT $$! Other text blablaTT*1";
-        //.......................................................................
+        private static string currentString = "";
+        private static BlurbListView BlurbListView = new BlurbListView();
 
         [STAThread]
         static void Main()
@@ -41,7 +36,7 @@ namespace Servant
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TemplatesView());
+            Application.Run(BlurbListView);
 
             UnhookWindowsHookEx(_hookID);
         }
@@ -63,20 +58,24 @@ namespace Servant
             {
                 currentString += VKCodeToString((uint)Marshal.ReadInt32(lParam));
 
-                if (templateIdentifier == currentString)
+                foreach (string[] blurb in BlurbListView.BLURBLIST)
                 {
-                    UnhookWindowsHookEx(_hookID);
+                    string pattern = blurb[1];
 
-                    // Missing functionality: Find the template based on the match
-                    DeleteTemplateIdentifier();
-                    WriteTemplateText(templateText);
-                    currentString = "";
+                    if (pattern == currentString)
+                    {
+                        UnhookWindowsHookEx(_hookID);
 
-                    _hookID = SetHook(_proc);
-                }
-                else if (!templateIdentifier.StartsWith(currentString))
-                {
-                    currentString = "";
+                        DeletePattern(pattern);
+                        WriteText(blurb[2]);
+                        currentString = "";
+
+                        _hookID = SetHook(_proc);
+                    }
+                    else if (!pattern.StartsWith(currentString))
+                    {
+                        currentString = "";
+                    }
                 }
             }
 
@@ -84,11 +83,11 @@ namespace Servant
         }
 
         /// <summary>
-        /// Method to delete the template identifier from the current writting window
+        /// Method to delete the blurb identifier from the current writting window
         /// </summary>
-        private static void DeleteTemplateIdentifier()
+        private static void DeletePattern(string pattern)
         {
-            for (int i = 1; i < templateIdentifier.Length; i++)
+            for (int i = 1; i < pattern.Length; i++)
             {
                 keybd_event((byte)'\b', 0, 0, IntPtr.Zero);
                 keybd_event((byte)'\b', 0, KEYEVENTF_KEYUP, IntPtr.Zero);
@@ -183,13 +182,13 @@ namespace Servant
         }
 
         /// <summary>
-        /// Method to send the template text to the current writting window
+        /// Method to send the blurb text to the current writting window
         /// </summary>
-        public static void WriteTemplateText(string templateText)
+        public static void WriteText(string text)
         {
             List<INPUT> inputs = new List<INPUT>();
 
-            foreach (char letter in templateText)
+            foreach (char letter in text)
             {
                 foreach (bool keyUp in new bool[] { false, true })
                 {
@@ -309,30 +308,3 @@ namespace Servant
         static extern IntPtr GetMessageExtraInfo();
     }
 }
-
-
-/*
- * Bugs:
- * 
- * Si el template contiene caracteres especiales no los esta pegando 
- * No esta validando si el patron contiene caracteres especiales => ahora si funciona con caracteres especiales, pero no caracteres especiales de combinaciones de teclas
- * Si el patron contiene minusculas 
- * Si el template tiene minusculas
- * 
- * Hay un problema con el parse de numeros a chars, no siempre esta viniendo el numero que corresponde a la letra o simbolo especial
- * 
- *  http://yorktown.cbe.wwu.edu/sandvig/shared/asciiCodes.aspx
- *  https://docs.microsoft.com/en-us/dotnet/api/system.intptr?view=netframework-4.8 => No se que esta haciendo
- *  https://stackoverflow.com/questions/11829072/how-do-i-read-a-uint-from-a-pointer-with-marshalling
- *  
- *  https://stackoverflow.com/questions/20201350/paste-text-to-an-active-word-window-using-c-sharp
- *  Parece que esta es la solucion: 
- *  https://www.youtube.com/watch?v=f_ZBFJMlhYQ
- *  
- *  //https://stackoverflow.com/questions/31370634/how-to-sendkeybd-event-unicode-keys-with-c-sharp
- *  
- *  Esto fue lo que sirvio para parsear bien la tecla al valor 
- *  
- *  //https://stackoverflow.com/questions/10391025/receive-os-level-key-press-events-in-c-sharp-application
- *      //lParam => Unmanaged memory 
- */
