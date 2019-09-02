@@ -7,6 +7,8 @@ namespace Servant
     {
         public string id = "";
 
+        // document this class 
+
         public BlurbView()
         {
             InitializeComponent();
@@ -15,11 +17,12 @@ namespace Servant
         private void buttonSave_Click(object sender, EventArgs e)
         {
             string pattern = textBoxPattern.Text;
-            string text = richTextBoxText.Rtf;
+            string format = comboBoxFormat.GetItemText(comboBoxFormat.SelectedItem);
+            string text = (format == "Plain Text") ? richTextBoxText.Text: richTextBoxText.Rtf;  
 
-            if (ValidateBlurb(pattern, text))
+            if (ValidateBlurb(pattern, format, text))
             {
-                bool result = BlurbController.SaveBlurb(id, pattern, text);
+                bool result = BlurbController.SaveBlurb(id, pattern, format, text);
 
                 if (result)
                 {
@@ -44,9 +47,21 @@ namespace Servant
             richTextBoxText.Rtf = "";
         }
 
-        private bool ValidateBlurb(string pattern, string text)
+        private bool ValidateBlurb(string pattern, string format, string text)
         {
-            return (!string.IsNullOrEmpty(pattern) && !string.IsNullOrEmpty(text));
+            return (!string.IsNullOrEmpty(pattern) && !string.IsNullOrEmpty(format) && !string.IsNullOrEmpty(text));
+        }
+
+        private void pictureBoxPattern_MouseHover(object sender, EventArgs e)
+        {
+            ToolTip tt = new ToolTip();
+            tt.SetToolTip(pictureBoxPattern, "something"); /// add content here 
+        }
+
+        private void pictureBoxFormat_Click(object sender, EventArgs e)
+        {
+            ToolTip tt = new ToolTip();
+            tt.SetToolTip(pictureBoxFormat, "something"); /// add content here 
         }
     }
 }

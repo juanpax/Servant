@@ -23,9 +23,9 @@ namespace Servant
         /// <summary>
         /// Method to save or update a blurb
         /// </summary>
-        public static bool SaveBlurb(string id, string pattern, string text)
+        public static bool SaveBlurb(string id, string pattern, string format, string text)
         {
-            return BlurbModel.SaveBlurb(id, pattern, text);
+            return BlurbModel.SaveBlurb(id, pattern, format, text);
         }
 
         /// <summary>

@@ -15,6 +15,9 @@ namespace Servant
         private const uint INPUT_KEYBOARD = 1;
         private const uint KEYEVENTF_KEYUP = 0x0002;
         private const uint KEYEVENTF_UNICODE = 0x0004;
+        private const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
+        private const int VK_LCONTROL = 0xA2;
+        private const int V = 0x56;
 
         // Variables to catch the key events
         private static LowLevelKeyboardProc _proc = HookCallback;
@@ -78,7 +81,7 @@ namespace Servant
                         UnhookWindowsHookEx(_hookID);
 
                         DeletePattern(pattern);
-                        WriteText(blurb[2]);
+                        WriteText(blurb[2], blurb[3]);
                         currentString = "";
 
                         _hookID = SetHook(_proc);
@@ -172,7 +175,7 @@ namespace Servant
 
             if (_lastVKCode != 0 && _lastIsDead)
             {
-                var sbTemp = new System.Text.StringBuilder(5);
+                var sbTemp = new StringBuilder(5);
                 ToUnicodeEx(_lastVKCode, _lastScanCode, _lastKeyState, sbTemp, sbTemp.Capacity, (uint)0, hkl);
                 _lastVKCode = 0;
 
@@ -205,79 +208,18 @@ namespace Servant
         /// <summary>
         /// Method to send the blurb text to the current writting window
         /// </summary>
-        public static void WriteText(string text)
+        private static void WriteText(string format, string text)
         {
-            List<INPUT> inputs = new List<INPUT>();
+            TextDataFormat textFormat =
+                (format == "Plain Text") ? TextDataFormat.Text :
+                (format == "Rich Text Format (RTF)") ? TextDataFormat.Rtf :
+                (format == "HTML") ? TextDataFormat.Html : TextDataFormat.Text;
 
-            foreach (char letter in text)
-            {
-                foreach (bool keyUp in new bool[] { false, true })
-                {
-                    INPUT input = new INPUT
-                    {
-                        type = INPUT_KEYBOARD,
-                        u = new InputUnion
-                        {
-                            ki = new KEYBDINPUT
-                            {
-                                wVk = 0,
-                                wScan = letter,
-                                dwFlags = KEYEVENTF_UNICODE | (keyUp ? KEYEVENTF_KEYUP : 0),
-                                dwExtraInfo = GetMessageExtraInfo(),
-                            }
-                        }
-                    };
-                    inputs.Add(input);
-                }
-            }
-
-            SendInput((uint)inputs.Count, inputs.ToArray(), Marshal.SizeOf(typeof(INPUT)));
-        }
-
-        struct INPUT
-        {
-            public uint type;
-            public InputUnion u;
-        }
-
-        [StructLayout(LayoutKind.Explicit)]
-        struct InputUnion
-        {
-            [FieldOffset(0)]
-            public MOUSEINPUT mi;
-            [FieldOffset(0)]
-            public KEYBDINPUT ki;
-            [FieldOffset(0)]
-            public HARDWAREINPUT hi;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        struct MOUSEINPUT
-        {
-            public int dx;
-            public int dy;
-            public uint mouseData;
-            public uint dwFlags;
-            public uint time;
-            public IntPtr dwExtraInfo;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        struct KEYBDINPUT
-        {
-            public ushort wVk;
-            public ushort wScan;
-            public uint dwFlags;
-            public uint time;
-            public IntPtr dwExtraInfo;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        struct HARDWAREINPUT
-        {
-            public uint uMsg;
-            public ushort wParamL;
-            public ushort wParamH;
+            Clipboard.SetText(text, textFormat);
+            keybd_event(VK_LCONTROL, 0, KEYEVENTF_EXTENDEDKEY, IntPtr.Zero);
+            keybd_event(V, 0, KEYEVENTF_EXTENDEDKEY, IntPtr.Zero);
+            keybd_event(V, 0, KEYEVENTF_KEYUP, IntPtr.Zero);
+            keybd_event(VK_LCONTROL, 0, KEYEVENTF_KEYUP, IntPtr.Zero);
         }
 
         // DDL methods to get the pressed key
@@ -321,11 +263,5 @@ namespace Servant
         [DllImport("user32.dll")]
         private static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState, [Out, MarshalAs(UnmanagedType.LPWStr)] System.Text.StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
 
-        // DDLS methods to write text 
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern uint SendInput(uint nInputs, INPUT[] pInputs, int cbSize);
-
-        [DllImport("user32.dll")]
-        static extern IntPtr GetMessageExtraInfo();
     }
 }

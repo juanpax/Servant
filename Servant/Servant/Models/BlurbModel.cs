@@ -19,6 +19,7 @@ namespace Servant
             string[] blurb = new string[] {
                                             Convert.ToString(firstRow["ID"]),
                                             Convert.ToString(firstRow["PATTERN"]),
+                                            Convert.ToString(firstRow["FORMAT"]),
                                             Convert.ToString(firstRow["TEXT"])
                                           };
             return blurb;
@@ -38,12 +39,12 @@ namespace Servant
         /// <summary>
         /// Method to save or update a blurb
         /// </summary>
-        public static bool SaveBlurb(string id, string pattern, string text)
+        public static bool SaveBlurb(string id, string pattern, string format, string text)
         {
             text = text.Replace("'", "''");
             string query =
-                (id == "") ? string.Format(@"INSERT INTO BLURB (PATTERN, TEXT) VALUES ('{0}', '{1}')", pattern, text) :
-                string.Format("UPDATE BLURB SET PATTERN = '{0}', TEXT = '{1}' WHERE ID = {2}", pattern, text, id);
+                (id == "") ? string.Format(@"INSERT INTO BLURB (PATTERN, FORMAT, TEXT) VALUES ('{0}', '{1}', '{2}')", pattern, format, text) :
+                string.Format("UPDATE BLURB SET PATTERN = '{0}', FORMAT = '{1}', TEXT = '{2}' WHERE ID = {3}", pattern, format, text, id);
 
             return DBConnection.INSERT(query);
         }
@@ -68,6 +69,7 @@ namespace Servant
                                         {
                                             Convert.ToString(rw["ID"]),
                                             Convert.ToString(rw["PATTERN"]),
+                                            Convert.ToString(rw["FORMAT"]),
                                             Convert.ToString(rw["TEXT"])
                                         }).ToList();
 
