@@ -55,10 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BlurbController.cs" />
-    <Compile Include="HtmlFromXamlConverter.cs" />
     <Compile Include="Models\BlurbModel.cs" />
     <Compile Include="Models\DBConnection.cs" />
-    <Compile Include="RtfToHtmlConverter.cs" />
     <Compile Include="Views\BlurbListView.cs">
       <SubType>Form</SubType>
     </Compile>

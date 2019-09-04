@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Servant
@@ -15,9 +15,9 @@ namespace Servant
         private const uint INPUT_KEYBOARD = 1;
         private const uint KEYEVENTF_KEYUP = 0x0002;
         private const uint KEYEVENTF_UNICODE = 0x0004;
-        private const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
-        private const int VK_LCONTROL = 0xA2;
-        private const int V = 0x56;
+        //private const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
+        //private const int VK_LCONTROL = 0xA2;
+        //private const int V = 0x56;
 
         // Variables to catch the key events
         private static LowLevelKeyboardProc _proc = HookCallback;
@@ -210,16 +210,34 @@ namespace Servant
         /// </summary>
         private static void WriteText(string format, string text)
         {
+            //bool currentWindowAppSupportRTF = CurrentWindowAppSupportRTF(text);
+            //text = (!currentWindowAppSupportRTF) ? ParseRTF2PlainText(text) : text;
+
             TextDataFormat textFormat =
-                (format == "Plain Text") ? TextDataFormat.Text :
-                (format == "Rich Text Format (RTF)") ? TextDataFormat.Rtf :
-                (format == "HTML") ? TextDataFormat.Html : TextDataFormat.Text;
+            (format == "Plain Text" /*|| !currentWindowAppSupportRTF*/) ? TextDataFormat.Text :
+            (format == "Rich Text Format (RTF)") ? TextDataFormat.Rtf : TextDataFormat.Text;
 
             Clipboard.SetText(text, textFormat);
-            keybd_event(VK_LCONTROL, 0, KEYEVENTF_EXTENDEDKEY, IntPtr.Zero);
-            keybd_event(V, 0, KEYEVENTF_EXTENDEDKEY, IntPtr.Zero);
-            keybd_event(V, 0, KEYEVENTF_KEYUP, IntPtr.Zero);
-            keybd_event(VK_LCONTROL, 0, KEYEVENTF_KEYUP, IntPtr.Zero);
+            SendKeys.SendWait("^(V)");
+        }
+
+        /// <summary>
+        /// This method is going to parse the rtf text to plain text format
+        /// </summary>
+        private static string ParseRTF2PlainText(string rtf)
+        {
+            RichTextBox rtBox = new RichTextBox();
+            rtBox.Rtf = rtf;
+
+            return rtBox.Text;
+        }
+
+        /// <summary>
+        /// Method to validate if the current window will support RTF format or not
+        /// </summary>
+        private static bool CurrentWindowAppSupportRTF(string text)
+        {
+            return true;
         }
 
         // DDL methods to get the pressed key
@@ -236,7 +254,7 @@ namespace Servant
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
 
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", SetLastError = true)]
         public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, IntPtr dwExtraInfo);
 
         [DllImport("User32.dll")]
@@ -262,6 +280,5 @@ namespace Servant
 
         [DllImport("user32.dll")]
         private static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState, [Out, MarshalAs(UnmanagedType.LPWStr)] System.Text.StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
-
     }
 }

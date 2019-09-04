@@ -5,15 +5,20 @@ namespace Servant
 {
     public partial class BlurbView : Form
     {
+        // This id the blurb id and it is going to be used to validate if the user is adding a new blurb or updating the information of one of the current ones.
         public string id = "";
 
-        // document this class 
-
+        /// <summary>
+        /// Class constructor
+        /// </summary>
         public BlurbView()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Event when the save button is clicked
+        /// </summary>
         private void buttonSave_Click(object sender, EventArgs e)
         {
             string pattern = textBoxPattern.Text;
@@ -42,26 +47,38 @@ namespace Servant
             }
         }
 
+        /// <summary>
+        /// Event when the reset button is clicked
+        /// </summary>
         private void buttonReset_Click(object sender, EventArgs e)
         {
             richTextBoxText.Rtf = "";
         }
 
-        private bool ValidateBlurb(string pattern, string format, string text)
-        {
-            return (!string.IsNullOrEmpty(pattern) && !string.IsNullOrEmpty(format) && !string.IsNullOrEmpty(text));
-        }
-
+        /// <summary>
+        /// Event mouse over the pattern information icon
+        /// </summary>
         private void pictureBoxPattern_MouseHover(object sender, EventArgs e)
         {
             ToolTip tt = new ToolTip();
             tt.SetToolTip(pictureBoxPattern, "something"); /// add content here 
         }
 
+        /// <summary>
+        /// Event mouse over the format information icon
+        /// </summary>
         private void pictureBoxFormat_Click(object sender, EventArgs e)
         {
             ToolTip tt = new ToolTip();
             tt.SetToolTip(pictureBoxFormat, "something"); /// add content here 
+        }
+
+        /// <summary>
+        /// Method to validate if the blurb information is completed 
+        /// </summary>
+        private bool ValidateBlurb(string pattern, string format, string text)
+        {
+            return (!string.IsNullOrEmpty(pattern) && !string.IsNullOrEmpty(format) && !string.IsNullOrEmpty(text));
         }
     }
 }
