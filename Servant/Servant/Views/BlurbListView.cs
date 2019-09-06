@@ -37,7 +37,7 @@ namespace Servant
             ServantPhrases.Add(7, "aagh, agh, aaaaahg....");
             ServantPhrases.Add(8, "10/10 doble puntaje");
             ServantPhrases.Add(9, "Me tenes arta!");
-            ServantPhrases.Add(10, "");
+            ServantPhrases.Add(10, "Je je");
             ServantPhrases.Add(11, "HOLA JP!");
             ServantPhrases.Add(12, "OK");
         }

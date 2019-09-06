@@ -39,7 +39,6 @@ namespace Servant
             BlurbListView = new BlurbListView();
             BlurbListView.roundedButtonPlayPause.Click += new EventHandler(roundedButtonPlayPause_Click);
             BlurbListView.FormClosed += new FormClosedEventHandler(BlurbListView_FormClosed);
-
             Application.Run(BlurbListView);
         }
 
@@ -240,7 +239,7 @@ namespace Servant
         /// Method to send the blurb text to the current writting window
         /// </summary>
         private static void WriteText(string format, string text)
-        {
+         {
             //bool currentWindowAppSupportRTF = CurrentWindowAppSupportRTF(text);
             //text = (!currentWindowAppSupportRTF) ? ParseRTF2PlainText(text) : text;
 
