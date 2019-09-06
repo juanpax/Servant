@@ -153,7 +153,7 @@ namespace Servant
         private void EditBlurb()
         {
             BlurbView newBlurb = new BlurbView();
-            newBlurb.id = listView.SelectedItems[0].SubItems[0].Text;
+            newBlurb.id = listView.SelectedItems[0].SubItems[4].Text;
             newBlurb.textBoxPattern.Text = listView.SelectedItems[0].SubItems[1].Text;
             newBlurb.comboBoxFormat.SelectedIndex = newBlurb.comboBoxFormat.FindStringExact(listView.SelectedItems[0].SubItems[2].Text);
             newBlurb.richTextBoxText.Rtf = listView.SelectedItems[0].SubItems[3].Text;

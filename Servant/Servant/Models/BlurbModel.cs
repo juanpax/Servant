@@ -64,15 +64,16 @@ namespace Servant
         /// </summary>
         private static List<string[]> DataTableToList(DataTable datatable)
         {
+            int i = 0;
             List<string[]> blurbList = (from rw in datatable.AsEnumerable()
                                         select new string[]
                                         {
-                                            Convert.ToString(rw["ID"]),
+                                            Convert.ToString(++i),
                                             Convert.ToString(rw["PATTERN"]),
                                             Convert.ToString(rw["FORMAT"]),
-                                            Convert.ToString(rw["TEXT"])
+                                            Convert.ToString(rw["TEXT"]),
+                                            Convert.ToString(rw["ID"])
                                         }).ToList();
-
             return blurbList;
         }
     }

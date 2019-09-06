@@ -15,32 +15,62 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_06AC87F92BBC4429834EE405026E3175"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_08895F06641EF9E5151D0CA4397748DD"
-        "OwnerKey" = "8:_06AC87F92BBC4429834EE405026E3175"
+        "OwnerKey" = "8:_B32807F3CAAD47D9A114FEF8EC604EAE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4DCCB9209423410C827FBB2D209C497A"
+        "MsmKey" = "8:_5008263C60014313AC46CC9AE5AE635C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_546359BC95834F50B490ADA2BAFFF726"
+        "MsmKey" = "8:_58E029DD78D64399BE6408A6F660D6EA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_5C0904DB83055F6B9838C430E37C130F"
-        "OwnerKey" = "8:_06AC87F92BBC4429834EE405026E3175"
+        "OwnerKey" = "8:_B32807F3CAAD47D9A114FEF8EC604EAE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8F638C813C1743A2941613E6091F29A6"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_960C32B59CBD4DD6835F3358CC007F20"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B1C401A770404FA0B30CBAC6CF224E0E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B32807F3CAAD47D9A114FEF8EC604EAE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C2E228A3E8E24C06AB7CECD70BA1527C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DADB52AE125A43E1BB80DE3D86B940B5"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -52,7 +82,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_06AC87F92BBC4429834EE405026E3175"
+        "OwnerKey" = "8:_B32807F3CAAD47D9A114FEF8EC604EAE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -155,12 +185,12 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4DCCB9209423410C827FBB2D209C497A"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5008263C60014313AC46CC9AE5AE635C"
             {
-            "SourcePath" = "8:..\\Servant\\ServantDB.db"
-            "TargetName" = "8:ServantDB.db"
+            "SourcePath" = "8:..\\Servant\\bin\\Debug\\x64\\SQLite.Interop.dll"
+            "TargetName" = "8:SQLite.Interop.dll"
             "Tag" = "8:"
-            "Folder" = "8:_B2097DF0C6C7488E839E99EF5150AD8D"
+            "Folder" = "8:_AE1129CEFF70484DB547B69F17462AFC"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -175,12 +205,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_546359BC95834F50B490ADA2BAFFF726"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_58E029DD78D64399BE6408A6F660D6EA"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\..\\..\\..\\Desktop\\servant_icons\\servant.ico"
-            "TargetName" = "8:servant.ico"
+            "SourcePath" = "8:..\\Servant\\bin\\Debug\\x86\\SQLite.Interop.dll"
+            "TargetName" = "8:SQLite.Interop.dll"
             "Tag" = "8:"
-            "Folder" = "8:_B2097DF0C6C7488E839E99EF5150AD8D"
+            "Folder" = "8:_245007BF7DCB431D82245B52848A073A"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -226,6 +256,106 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8F638C813C1743A2941613E6091F29A6"
+            {
+            "SourcePath" = "8:..\\Servant\\bin\\Debug\\Servant.exe.config"
+            "TargetName" = "8:Servant.exe.config"
+            "Tag" = "8:"
+            "Folder" = "8:_B2097DF0C6C7488E839E99EF5150AD8D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_960C32B59CBD4DD6835F3358CC007F20"
+            {
+            "SourcePath" = "8:..\\..\\..\\..\\..\\..\\..\\Desktop\\servant_icons\\servant.ico"
+            "TargetName" = "8:servant.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_B2097DF0C6C7488E839E99EF5150AD8D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B1C401A770404FA0B30CBAC6CF224E0E"
+            {
+            "SourcePath" = "8:..\\Servant\\bin\\Debug\\System.Data.SQLite.xml"
+            "TargetName" = "8:System.Data.SQLite.xml"
+            "Tag" = "8:"
+            "Folder" = "8:_B2097DF0C6C7488E839E99EF5150AD8D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C2E228A3E8E24C06AB7CECD70BA1527C"
+            {
+            "SourcePath" = "8:..\\Servant\\bin\\Debug\\ServantDB.db"
+            "TargetName" = "8:ServantDB.db"
+            "Tag" = "8:"
+            "Folder" = "8:_B2097DF0C6C7488E839E99EF5150AD8D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DADB52AE125A43E1BB80DE3D86B940B5"
+            {
+            "SourcePath" = "8:..\\Servant\\bin\\Debug\\System.Data.SQLite.dll.config"
+            "TargetName" = "8:System.Data.SQLite.dll.config"
+            "Tag" = "8:"
+            "Folder" = "8:_B2097DF0C6C7488E839E99EF5150AD8D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -264,6 +394,28 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_245007BF7DCB431D82245B52848A073A"
+                    {
+                    "Name" = "8:x86"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_AF0B0A8E530F492BA4F08AFF8ADDE14E"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_AE1129CEFF70484DB547B69F17462AFC"
+                    {
+                    "Name" = "8:x64"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_40E394F1467A47B2A8B71C2338B46A42"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
         }
@@ -283,7 +435,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Servant"
         "ProductCode" = "8:{D78B2B1F-5CC3-4EED-B154-39F7C277CA47}"
-        "PackageCode" = "8:{AA7B3F4B-D826-4B33-A681-6E3D765F836B}"
+        "PackageCode" = "8:{7E88CB98-2741-4505-99EF-C76FA31C875E}"
         "UpgradeCode" = "8:{1A5D5948-A7C5-4163-AD11-62F66C5DCEE6}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -403,7 +555,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_91F66B81CB4446EEA11EC054B681A58A"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_46F78C5CC1E44CC9B58920B10B9A464B"
             {
             "Name" = "8:Servant"
             "Arguments" = "8:"
@@ -411,13 +563,13 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_06AC87F92BBC4429834EE405026E3175"
+            "Target" = "8:_B32807F3CAAD47D9A114FEF8EC604EAE"
             "Folder" = "8:_A1FF116DE8804C65B2E6352625E5BE46"
             "WorkingFolder" = "8:_B2097DF0C6C7488E839E99EF5150AD8D"
-            "Icon" = "8:_546359BC95834F50B490ADA2BAFFF726"
+            "Icon" = "8:_960C32B59CBD4DD6835F3358CC007F20"
             "Feature" = "8:"
             }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_A0324D08D64A4596B17796F9C6690323"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_78736F97AC6C463EB9D09AB0C21250B6"
             {
             "Name" = "8:Servant"
             "Arguments" = "8:"
@@ -425,10 +577,10 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_06AC87F92BBC4429834EE405026E3175"
+            "Target" = "8:_B32807F3CAAD47D9A114FEF8EC604EAE"
             "Folder" = "8:_A5E4564C7A2344898F8F70431441E8F4"
             "WorkingFolder" = "8:_B2097DF0C6C7488E839E99EF5150AD8D"
-            "Icon" = "8:_546359BC95834F50B490ADA2BAFFF726"
+            "Icon" = "8:_960C32B59CBD4DD6835F3358CC007F20"
             "Feature" = "8:"
             }
         }
@@ -830,7 +982,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_06AC87F92BBC4429834EE405026E3175"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B32807F3CAAD47D9A114FEF8EC604EAE"
             {
             "SourcePath" = "8:..\\Servant\\obj\\Debug\\Servant.exe"
             "TargetName" = "8:"
