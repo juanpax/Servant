@@ -45,7 +45,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_960C32B59CBD4DD6835F3358CC007F20"
+        "MsmKey" = "8:_AAFF6675AFD84DD8A6997A1833E5C692"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -76,12 +76,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5C0904DB83055F6B9838C430E37C130F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B32807F3CAAD47D9A114FEF8EC604EAE"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -89,6 +83,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_08895F06641EF9E5151D0CA4397748DD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5C0904DB83055F6B9838C430E37C130F"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -109,6 +109,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -125,6 +141,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -276,10 +300,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_960C32B59CBD4DD6835F3358CC007F20"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AAFF6675AFD84DD8A6997A1833E5C692"
             {
-            "SourcePath" = "8:..\\..\\..\\..\\..\\..\\..\\Desktop\\servant_icons\\servant.ico"
-            "TargetName" = "8:servant.ico"
+            "SourcePath" = "8:..\\..\\..\\..\\..\\..\\..\\Desktop\\servant-ico.ico"
+            "TargetName" = "8:servant-ico.ico"
             "Tag" = "8:"
             "Folder" = "8:_B2097DF0C6C7488E839E99EF5150AD8D"
             "Condition" = "8:"
@@ -435,7 +459,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Servant"
         "ProductCode" = "8:{D78B2B1F-5CC3-4EED-B154-39F7C277CA47}"
-        "PackageCode" = "8:{7E88CB98-2741-4505-99EF-C76FA31C875E}"
+        "PackageCode" = "8:{112C1B49-294F-418C-87FA-D2785199B6E2}"
         "UpgradeCode" = "8:{1A5D5948-A7C5-4163-AD11-62F66C5DCEE6}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -555,7 +579,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_46F78C5CC1E44CC9B58920B10B9A464B"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_6E62FC78C78449E8A85161EEC6B47B31"
             {
             "Name" = "8:Servant"
             "Arguments" = "8:"
@@ -563,24 +587,24 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_B32807F3CAAD47D9A114FEF8EC604EAE"
-            "Folder" = "8:_A1FF116DE8804C65B2E6352625E5BE46"
-            "WorkingFolder" = "8:_B2097DF0C6C7488E839E99EF5150AD8D"
-            "Icon" = "8:_960C32B59CBD4DD6835F3358CC007F20"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_78736F97AC6C463EB9D09AB0C21250B6"
-            {
-            "Name" = "8:Servant"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_B32807F3CAAD47D9A114FEF8EC604EAE"
+            "Target" = "8:_AAFF6675AFD84DD8A6997A1833E5C692"
             "Folder" = "8:_A5E4564C7A2344898F8F70431441E8F4"
             "WorkingFolder" = "8:_B2097DF0C6C7488E839E99EF5150AD8D"
-            "Icon" = "8:_960C32B59CBD4DD6835F3358CC007F20"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D6DBE87B83284178979C64F2CBB74FE0"
+            {
+            "Name" = "8:Servant"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_AAFF6675AFD84DD8A6997A1833E5C692"
+            "Folder" = "8:_A1FF116DE8804C65B2E6352625E5BE46"
+            "WorkingFolder" = "8:_B2097DF0C6C7488E839E99EF5150AD8D"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
         }

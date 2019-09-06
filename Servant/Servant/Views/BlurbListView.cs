@@ -29,7 +29,7 @@ namespace Servant
         private void LoadRandomPhrases()
         {
             ServantPhrases.Add(1, "No lo se Ricardo"); 
-            ServantPhrases.Add(2, "Same as usual sir?"); 
+            ServantPhrases.Add(2, "La respuesta esta en tu corazon"); 
             ServantPhrases.Add(3, "Pa pa poom poom pra pra pra"); 
             ServantPhrases.Add(4, "Holly Molly!"); 
             ServantPhrases.Add(5, "Ahora no joven"); 
@@ -116,7 +116,7 @@ namespace Servant
 
             if (dialogResult == DialogResult.Yes)
             {
-                string id = listView.SelectedItems[0].SubItems[0].Text;
+                string id = listView.SelectedItems[0].SubItems[4].Text;
                 bool result = BlurbController.DeleteBlurb(id);
 
                 if (result)

@@ -39,13 +39,13 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonAddBlurb = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.roundedButtonPlayPause = new Servant.Extra.RoundedButton();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBoxServantLogo = new System.Windows.Forms.PictureBox();
             this.labelServantState = new System.Windows.Forms.Label();
             this.contextMenuStripBlurb = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.roundedButtonPlayPause = new Servant.Extra.RoundedButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -162,6 +162,22 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(659, 97);
             this.tableLayoutPanel2.TabIndex = 4;
             // 
+            // roundedButtonPlayPause
+            // 
+            this.roundedButtonPlayPause.BackgroundImage = global::Servant.Properties.Resources.start;
+            this.roundedButtonPlayPause.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.roundedButtonPlayPause.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.roundedButtonPlayPause.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
+            this.roundedButtonPlayPause.FlatAppearance.BorderSize = 0;
+            this.roundedButtonPlayPause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.roundedButtonPlayPause.Location = new System.Drawing.Point(17, 18);
+            this.roundedButtonPlayPause.Margin = new System.Windows.Forms.Padding(2);
+            this.roundedButtonPlayPause.Name = "roundedButtonPlayPause";
+            this.roundedButtonPlayPause.Size = new System.Drawing.Size(71, 73);
+            this.roundedButtonPlayPause.TabIndex = 2;
+            this.roundedButtonPlayPause.Tag = "Play";
+            this.roundedButtonPlayPause.UseVisualStyleBackColor = true;
+            // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 1;
@@ -228,22 +244,6 @@
             this.deleteToolStripMenuItem.Size = new System.Drawing.Size(111, 26);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
-            // 
-            // roundedButtonPlayPause
-            // 
-            this.roundedButtonPlayPause.BackgroundImage = global::Servant.Properties.Resources.start;
-            this.roundedButtonPlayPause.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.roundedButtonPlayPause.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.roundedButtonPlayPause.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
-            this.roundedButtonPlayPause.FlatAppearance.BorderSize = 0;
-            this.roundedButtonPlayPause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.roundedButtonPlayPause.Location = new System.Drawing.Point(17, 18);
-            this.roundedButtonPlayPause.Margin = new System.Windows.Forms.Padding(2);
-            this.roundedButtonPlayPause.Name = "roundedButtonPlayPause";
-            this.roundedButtonPlayPause.Size = new System.Drawing.Size(71, 73);
-            this.roundedButtonPlayPause.TabIndex = 2;
-            this.roundedButtonPlayPause.Tag = "Play";
-            this.roundedButtonPlayPause.UseVisualStyleBackColor = true;
             // 
             // BlurbListView
             // 

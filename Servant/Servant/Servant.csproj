@@ -132,7 +132,7 @@
     <None Include="Resources\Servant.png" />
     <Content Include="Resources\start.png" />
     <Content Include="ServantDB.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Servant_TemporaryKey.pfx" />
   </ItemGroup>
