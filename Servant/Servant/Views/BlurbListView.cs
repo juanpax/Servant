@@ -8,7 +8,7 @@ namespace Servant
     public partial class BlurbListView : Form
     {
         // List of all the blurb created by the user 
-        public static List<string[]> BLURBLIST = BlurbController.GetBlurbList();
+        public static List<string[]> BLURBLIST = new List<string[]>();
 
         // Random phrases dictionary
         private Dictionary<int, string> ServantPhrases = new Dictionary<int, string>();
@@ -137,8 +137,9 @@ namespace Servant
         private void LoadBlurbList()
         {
             listView.Items.Clear();
+            BLURBLIST = BlurbController.GetBlurbList();
 
-            foreach (string[] blurb in BlurbController.GetBlurbList())
+            foreach (string[] blurb in BLURBLIST)
             {
                 ListViewItem item = new ListViewItem(blurb);
                 item.Font = new Font(item.Font, FontStyle.Regular);
