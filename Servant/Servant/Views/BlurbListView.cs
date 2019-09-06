@@ -10,12 +10,36 @@ namespace Servant
         // List of all the blurb created by the user 
         public static List<string[]> BLURBLIST = BlurbController.GetBlurbList();
 
+        // Random phrases dictionary
+        private Dictionary<int, string> ServantPhrases = new Dictionary<int, string>();
+
         /// <summary>
         /// Class constructor
         /// </summary>
         public BlurbListView()
         {
             InitializeComponent();
+
+            LoadRandomPhrases();
+        }
+
+        /// <summary>
+        /// Method to load the list of random phrases
+        /// </summary>
+        private void LoadRandomPhrases()
+        {
+            ServantPhrases.Add(1, "No lo se Ricardo"); 
+            ServantPhrases.Add(2, "Same as usual sir?"); 
+            ServantPhrases.Add(3, "Pa pa poom poom pra pra pra"); 
+            ServantPhrases.Add(4, "Holly Molly!"); 
+            ServantPhrases.Add(5, "Ahora no joven"); 
+            ServantPhrases.Add(6, "OSCAR!"); 
+            ServantPhrases.Add(7, "aagh, agh, aaaaahg....");
+            ServantPhrases.Add(8, "10/10 doble puntaje");
+            ServantPhrases.Add(9, "Me tenes arta!");
+            ServantPhrases.Add(10, "");
+            ServantPhrases.Add(11, "HOLA JP!");
+            ServantPhrases.Add(12, "OK");
         }
 
         /// <summary>
@@ -112,10 +136,9 @@ namespace Servant
         /// </summary>
         private void LoadBlurbList()
         {
-            BLURBLIST = BlurbController.GetBlurbList();
             listView.Items.Clear();
 
-            foreach (string[] blurb in BLURBLIST)
+            foreach (string[] blurb in BlurbController.GetBlurbList())
             {
                 ListViewItem item = new ListViewItem(blurb);
                 item.Font = new Font(item.Font, FontStyle.Regular);
@@ -134,6 +157,17 @@ namespace Servant
             newBlurb.comboBoxFormat.SelectedIndex = newBlurb.comboBoxFormat.FindStringExact(listView.SelectedItems[0].SubItems[2].Text);
             newBlurb.richTextBoxText.Rtf = listView.SelectedItems[0].SubItems[3].Text;
             InitBlurbView(newBlurb, "Edit blurb");
+        }
+
+        /// <summary>
+        /// Event when the user click the Servant logo
+        /// </summary>
+        private void pictureBoxServantLogo_Click(object sender, EventArgs e)
+        {
+            int randomNumber = new Random().Next(1, 12);
+            string randomPhrase = ServantPhrases[randomNumber];
+
+            new ToolTip().SetToolTip(pictureBoxServantLogo, randomPhrase);
         }
     }
 }

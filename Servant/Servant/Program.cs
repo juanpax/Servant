@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Servant
@@ -15,9 +14,6 @@ namespace Servant
         private const uint INPUT_KEYBOARD = 1;
         private const uint KEYEVENTF_KEYUP = 0x0002;
         private const uint KEYEVENTF_UNICODE = 0x0004;
-        //private const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
-        //private const int VK_LCONTROL = 0xA2;
-        //private const int V = 0x56;
 
         // Variables to catch the key events
         private static LowLevelKeyboardProc _proc = HookCallback;
@@ -33,21 +29,56 @@ namespace Servant
         private static BlurbListView BlurbListView;
 
         /// <summary>
-        /// Main method
+        /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            _hookID = SetHook(_proc);
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             BlurbListView = new BlurbListView();
-            Application.Run(BlurbListView);
+            BlurbListView.roundedButtonPlayPause.Click += new EventHandler(roundedButtonPlayPause_Click);
+            BlurbListView.FormClosed += new FormClosedEventHandler(BlurbListView_FormClosed);
 
-            UnhookWindowsHookEx(_hookID);
+            Application.Run(BlurbListView);
         }
 
+        /// <summary>
+        /// Event when the rounded button is clicked
+        /// </summary>
+        private static void roundedButtonPlayPause_Click(object sender, EventArgs e)
+        {
+            string tag = BlurbListView.roundedButtonPlayPause.Tag.ToString();
+
+            if (tag == "Play")
+            {
+                BlurbListView.roundedButtonPlayPause.BackgroundImage = Properties.Resources.pause;
+                BlurbListView.labelServantState.Text = "Servant has been started!";
+                BlurbListView.roundedButtonPlayPause.Tag = "Pause";
+
+                _hookID = SetHook(_proc);
+            }
+            else
+            {
+                BlurbListView.roundedButtonPlayPause.BackgroundImage = Properties.Resources.start;
+                BlurbListView.labelServantState.Text = "Servant has been stopped!";
+                BlurbListView.roundedButtonPlayPause.Tag = "Play";
+
+                UnhookWindowsHookEx(_hookID);
+            }
+        }
+
+        /// <summary>
+        /// Event when the EventListView is closed
+        /// </summary>
+        private static void BlurbListView_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            UnhookWindowsHookEx(_hookID);
+        }
+               
+        /// <summary>
+        /// Delegate to manage Low level keyboard proc
+        /// </summary>
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
@@ -218,7 +249,7 @@ namespace Servant
             (format == "Rich Text Format (RTF)") ? TextDataFormat.Rtf : TextDataFormat.Text;
 
             Clipboard.SetText(text, textFormat);
-            SendKeys.SendWait("^(V)");
+            SendKeys.SendWait("^(v)");
         }
 
         /// <summary>
@@ -279,6 +310,6 @@ namespace Servant
         private static extern uint MapVirtualKeyEx(uint uCode, uint uMapType, IntPtr dwhkl);
 
         [DllImport("user32.dll")]
-        private static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState, [Out, MarshalAs(UnmanagedType.LPWStr)] System.Text.StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
+        private static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState, [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
     }
 }

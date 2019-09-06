@@ -67,7 +67,7 @@
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 58);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 4F));
@@ -83,7 +83,7 @@
             this.richTextBoxText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxText.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBoxText.Location = new System.Drawing.Point(17, 86);
-            this.richTextBoxText.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.richTextBoxText.Margin = new System.Windows.Forms.Padding(2);
             this.richTextBoxText.Name = "richTextBoxText";
             this.richTextBoxText.Size = new System.Drawing.Size(677, 331);
             this.richTextBoxText.TabIndex = 4;
@@ -161,7 +161,7 @@
             this.textBoxPattern.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxPattern.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxPattern.Location = new System.Drawing.Point(0, 0);
-            this.textBoxPattern.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxPattern.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxPattern.Name = "textBoxPattern";
             this.textBoxPattern.Size = new System.Drawing.Size(578, 24);
             this.textBoxPattern.TabIndex = 3;
@@ -199,7 +199,7 @@
             "Plain Text",
             "Rich Text Format (RTF)"});
             this.comboBoxFormat.Location = new System.Drawing.Point(0, 0);
-            this.comboBoxFormat.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxFormat.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxFormat.Name = "comboBoxFormat";
             this.comboBoxFormat.Size = new System.Drawing.Size(578, 27);
             this.comboBoxFormat.TabIndex = 7;
@@ -223,7 +223,7 @@
             this.panel1.Controls.Add(this.buttonSave);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(17, 421);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(677, 37);
             this.panel1.TabIndex = 7;
@@ -236,7 +236,7 @@
             this.buttonReset.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonReset.ForeColor = System.Drawing.Color.White;
             this.buttonReset.Location = new System.Drawing.Point(507, 0);
-            this.buttonReset.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonReset.Margin = new System.Windows.Forms.Padding(2);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(58, 37);
             this.buttonReset.TabIndex = 4;
@@ -254,7 +254,7 @@
             this.buttonSave.ForeColor = System.Drawing.Color.White;
             this.buttonSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonSave.Location = new System.Drawing.Point(565, 0);
-            this.buttonSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonSave.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(112, 37);
             this.buttonSave.TabIndex = 3;
@@ -272,7 +272,7 @@
             this.tableLayoutPanel3.Controls.Add(this.labelTitle, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -300,7 +300,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.tableLayoutPanel3);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "BlurbView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Servant";

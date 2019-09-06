@@ -60,8 +60,7 @@ namespace Servant
         /// </summary>
         private void pictureBoxPattern_MouseHover(object sender, EventArgs e)
         {
-            ToolTip tt = new ToolTip();
-            tt.SetToolTip(pictureBoxPattern, "something"); /// add content here 
+            new ToolTip().SetToolTip(pictureBoxPattern, "The pattern will be the combination of keys Servant is going to be looking for before pasting the Blurb content. Please do not combine capital and lowercase letters in the same pattern."); 
         }
 
         /// <summary>
@@ -69,8 +68,7 @@ namespace Servant
         /// </summary>
         private void pictureBoxFormat_Click(object sender, EventArgs e)
         {
-            ToolTip tt = new ToolTip();
-            tt.SetToolTip(pictureBoxFormat, "something"); /// add content here 
+            new ToolTip().SetToolTip(pictureBoxFormat, "Select the format of the text you want to save. RTF: Word or Outlook. Plain text: Any other kind of text editor."); 
         }
 
         /// <summary>

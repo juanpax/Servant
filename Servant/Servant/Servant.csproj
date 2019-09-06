@@ -55,6 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BlurbController.cs" />
+    <Compile Include="Extra\RoundedButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Models\BlurbModel.cs" />
     <Compile Include="Models\DBConnection.cs" />
     <Compile Include="Views\BlurbListView.cs">
@@ -97,6 +100,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\pause.png" />
+    <None Include="Resources\Servant.png" />
+    <Content Include="Resources\start.png" />
     <Content Include="ServantDB.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -106,9 +112,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\information.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\save.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\edit.png" />
