@@ -39,6 +39,8 @@ namespace Servant
             BlurbListView = new BlurbListView();
             BlurbListView.roundedButtonPlayPause.Click += new EventHandler(roundedButtonPlayPause_Click);
             BlurbListView.FormClosed += new FormClosedEventHandler(BlurbListView_FormClosed);
+
+            _hookID = SetHook(_proc);
             Application.Run(BlurbListView);
         }
 

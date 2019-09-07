@@ -164,7 +164,7 @@
             // 
             // roundedButtonPlayPause
             // 
-            this.roundedButtonPlayPause.BackgroundImage = global::Servant.Properties.Resources.start;
+            this.roundedButtonPlayPause.BackgroundImage = global::Servant.Properties.Resources.pause;
             this.roundedButtonPlayPause.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.roundedButtonPlayPause.Dock = System.Windows.Forms.DockStyle.Fill;
             this.roundedButtonPlayPause.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
@@ -175,7 +175,7 @@
             this.roundedButtonPlayPause.Name = "roundedButtonPlayPause";
             this.roundedButtonPlayPause.Size = new System.Drawing.Size(71, 73);
             this.roundedButtonPlayPause.TabIndex = 2;
-            this.roundedButtonPlayPause.Tag = "Play";
+            this.roundedButtonPlayPause.Tag = "Pause";
             this.roundedButtonPlayPause.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel3
@@ -216,9 +216,9 @@
             this.labelServantState.Location = new System.Drawing.Point(2, 38);
             this.labelServantState.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelServantState.Name = "labelServantState";
-            this.labelServantState.Size = new System.Drawing.Size(336, 26);
+            this.labelServantState.Size = new System.Drawing.Size(284, 26);
             this.labelServantState.TabIndex = 1;
-            this.labelServantState.Text = "Servant is currently not running";
+            this.labelServantState.Text = "Servant has been started!";
             // 
             // contextMenuStripBlurb
             // 

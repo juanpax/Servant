@@ -23,7 +23,7 @@ namespace Servant
         {
             string pattern = textBoxPattern.Text;
             string format = comboBoxFormat.GetItemText(comboBoxFormat.SelectedItem);
-            string text = (format == "Plain Text") ? richTextBoxText.Text: richTextBoxText.Rtf;  
+            string text = (format == "Plain Text") ? richTextBoxText.Text : richTextBoxText.Rtf;
 
             if (ValidateBlurb(pattern, format, text))
             {
@@ -34,7 +34,12 @@ namespace Servant
                     string[] newBlurb = BlurbController.GetBlurb(pattern);
                     id = newBlurb[0];
 
-                    MessageBox.Show("Item added successfully", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    DialogResult dialogResult = MessageBox.Show("Item added successfully", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    if (dialogResult == DialogResult.OK)
+                    {
+                        Close();
+                    }
                 }
                 else
                 {
@@ -60,7 +65,7 @@ namespace Servant
         /// </summary>
         private void pictureBoxPattern_MouseHover(object sender, EventArgs e)
         {
-            new ToolTip().SetToolTip(pictureBoxPattern, "The pattern will be the combination of keys Servant is going to be looking for before pasting the Blurb content. Please do not combine capital and lowercase letters in the same pattern."); 
+            new ToolTip().SetToolTip(pictureBoxPattern, "The pattern will be the combination of keys Servant is going to be looking for before pasting the Blurb content. Please do not combine capital and lowercase letters in the same pattern.");
         }
 
         /// <summary>
@@ -68,7 +73,7 @@ namespace Servant
         /// </summary>
         private void pictureBoxFormat_Click(object sender, EventArgs e)
         {
-            new ToolTip().SetToolTip(pictureBoxFormat, "Select the format of the text you want to save. RTF: Word or Outlook. Plain text: Any other kind of text editor."); 
+            new ToolTip().SetToolTip(pictureBoxFormat, "Select the format of the text you want to save. RTF: Word or Outlook. Plain text: Any other kind of text editor.");
         }
 
         /// <summary>

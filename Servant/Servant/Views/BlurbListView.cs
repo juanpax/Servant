@@ -28,12 +28,12 @@ namespace Servant
         /// </summary>
         private void LoadRandomPhrases()
         {
-            ServantPhrases.Add(1, "No lo se Ricardo"); 
-            ServantPhrases.Add(2, "La respuesta esta en tu corazon"); 
-            ServantPhrases.Add(3, "Pa pa poom poom pra pra pra"); 
-            ServantPhrases.Add(4, "Holly Molly!"); 
-            ServantPhrases.Add(5, "Ahora no joven"); 
-            ServantPhrases.Add(6, "OSCAR!"); 
+            ServantPhrases.Add(1, "No lo se Ricardo");
+            ServantPhrases.Add(2, "La respuesta esta en tu corazon");
+            ServantPhrases.Add(3, "Pa pa poom poom pra pra pra");
+            ServantPhrases.Add(4, "Holly Molly!");
+            ServantPhrases.Add(5, "Ahora no joven");
+            ServantPhrases.Add(6, "OSCAR!");
             ServantPhrases.Add(7, "aagh, agh, aaaaahg....");
             ServantPhrases.Add(8, "10/10 doble puntaje");
             ServantPhrases.Add(9, "Me tenes arta!");
@@ -155,8 +155,19 @@ namespace Servant
             BlurbView newBlurb = new BlurbView();
             newBlurb.id = listView.SelectedItems[0].SubItems[4].Text;
             newBlurb.textBoxPattern.Text = listView.SelectedItems[0].SubItems[1].Text;
-            newBlurb.comboBoxFormat.SelectedIndex = newBlurb.comboBoxFormat.FindStringExact(listView.SelectedItems[0].SubItems[2].Text);
-            newBlurb.richTextBoxText.Rtf = listView.SelectedItems[0].SubItems[3].Text;
+
+            string patternText = listView.SelectedItems[0].SubItems[2].Text;
+            newBlurb.comboBoxFormat.SelectedIndex = newBlurb.comboBoxFormat.FindStringExact(patternText);
+
+            if (patternText == "Plain Text")
+            {
+                newBlurb.richTextBoxText.Text = listView.SelectedItems[0].SubItems[3].Text;
+            }
+            else if (patternText == "Rich Text Format(RTF)")
+            {
+                newBlurb.richTextBoxText.Rtf = listView.SelectedItems[0].SubItems[3].Text;
+            }
+
             InitBlurbView(newBlurb, "Edit blurb");
         }
 
