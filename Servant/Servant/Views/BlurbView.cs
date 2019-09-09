@@ -6,7 +6,7 @@ namespace Servant
     public partial class BlurbView : Form
     {
         // This id the blurb id and it is going to be used to validate if the user is adding a new blurb or updating the information of one of the current ones.
-        public string id = "";
+        public string BlurbId = "";
 
         /// <summary>
         /// Class constructor
@@ -27,13 +27,10 @@ namespace Servant
 
             if (ValidateBlurb(pattern, format, text))
             {
-                bool result = BlurbController.SaveBlurb(id, pattern, format, text);
+                bool result = BlurbController.SaveBlurb(BlurbId, pattern, format, text);
 
                 if (result)
                 {
-                    string[] newBlurb = BlurbController.GetBlurb(pattern);
-                    id = newBlurb[0];
-
                     DialogResult dialogResult = MessageBox.Show("Item added successfully", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     if (dialogResult == DialogResult.OK)
@@ -65,7 +62,7 @@ namespace Servant
         /// </summary>
         private void pictureBoxPattern_MouseHover(object sender, EventArgs e)
         {
-            new ToolTip().SetToolTip(pictureBoxPattern, "The pattern will be the combination of keys Servant is going to be looking for before pasting the Blurb content. Please do not combine capital and lowercase letters in the same pattern.");
+            new ToolTip().SetToolTip(pictureBoxPattern, "The pattern will be the combination of keys Servant is going to be looking for before pasting the Blurb content.");
         }
 
         /// <summary>

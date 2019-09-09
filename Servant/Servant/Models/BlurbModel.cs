@@ -9,23 +9,6 @@ namespace Servant
     public static class BlurbModel
     {
         /// <summary>
-        /// Method to get an specific blurb based on a pattern 
-        /// </summary>
-        public static string[] GetBlurb(string pattern)
-        {
-            string query = "SELECT * FROM BLURB WHERE PATTERN = '" + pattern + "'";
-            DataTable result = DBConnection.SELECT(query);
-            DataRow firstRow = result.AsEnumerable().FirstOrDefault();
-            string[] blurb = new string[] {
-                                            Convert.ToString(firstRow["ID"]),
-                                            Convert.ToString(firstRow["PATTERN"]),
-                                            Convert.ToString(firstRow["FORMAT"]),
-                                            Convert.ToString(firstRow["TEXT"])
-                                          };
-            return blurb;
-        }
-
-        /// <summary>
         /// Method to get all the list of blurb in the database
         /// </summary>
         public static List<string[]> GetBlurbList()

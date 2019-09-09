@@ -5,14 +5,6 @@ namespace Servant
     public static class BlurbController
     {
         /// <summary>
-        /// Method to get an specific blurb based on a pattern 
-        /// </summary>
-        public static string[] GetBlurb(string pattern)
-        {
-            return BlurbModel.GetBlurb(pattern);
-        }
-
-        /// <summary>
         /// Method to get all the list of blurb in the database
         /// </summary>
         public static List<string[]> GetBlurbList()

@@ -10,8 +10,7 @@ namespace Servant
     {
         // Key codes
         private const uint WH_KEYBOARD_LL = 13;
-        private const uint WM_KEYDOWN = 0x0100;
-        private const uint INPUT_KEYBOARD = 1;
+        private const uint WM_KEYUP = 0x0101;
         private const uint KEYEVENTF_KEYUP = 0x0002;
         private const uint KEYEVENTF_UNICODE = 0x0004;
 
@@ -76,7 +75,7 @@ namespace Servant
         {
             UnhookWindowsHookEx(_hookID);
         }
-               
+
         /// <summary>
         /// Delegate to manage Low level keyboard proc
         /// </summary>
@@ -99,36 +98,45 @@ namespace Servant
         /// </summary>
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
+            if (nCode >= 0 && wParam == (IntPtr)WM_KEYUP)
             {
-                currentString += VKCodeToString((uint)Marshal.ReadInt32(lParam));
-                bool foundPatternMatch = false;
+                string key = VKCodeToString((uint)Marshal.ReadInt32(lParam));
 
-                foreach (string[] blurb in BlurbListView.BLURBLIST)
+                if (key == "\b" && currentString.Length > 0)
                 {
-                    string pattern = blurb[1];
-
-                    if (pattern == currentString)
-                    {
-                        UnhookWindowsHookEx(_hookID);
-
-                        DeletePattern(pattern);
-                        WriteText(blurb[2], blurb[3]);
-                        currentString = "";
-
-                        _hookID = SetHook(_proc);
-                        break;
-                    }
-                    else if (pattern.StartsWith(currentString))
-                    {
-                        foundPatternMatch = true;
-                        break;
-                    }
+                    currentString = currentString.Remove(currentString.Length - 1);
                 }
-
-                if (!foundPatternMatch)
+                else
                 {
-                    currentString = "";
+                    currentString += key;
+                    bool foundPatternMatch = false;
+
+                    foreach (string[] blurb in BlurbListView.BLURBLIST)
+                    {
+                        string pattern = blurb[1];
+
+                        if (pattern == currentString)
+                        {
+                            UnhookWindowsHookEx(_hookID);
+
+                            DeletePattern(pattern);
+                            WriteText(blurb[2], blurb[3]);
+                            currentString = "";
+
+                            _hookID = SetHook(_proc);
+                            break;
+                        }
+                        else if (pattern.StartsWith(currentString))
+                        {
+                            foundPatternMatch = true;
+                            break;
+                        }
+                    }
+
+                    if (!foundPatternMatch)
+                    {
+                        currentString = "";
+                    }
                 }
             }
 
@@ -140,7 +148,7 @@ namespace Servant
         /// </summary>
         private static void DeletePattern(string pattern)
         {
-            for (int i = 1; i < pattern.Length; i++)
+            foreach (char lettern in pattern)
             {
                 keybd_event((byte)'\b', 0, 0, IntPtr.Zero);
                 keybd_event((byte)'\b', 0, KEYEVENTF_KEYUP, IntPtr.Zero);
@@ -241,7 +249,7 @@ namespace Servant
         /// Method to send the blurb text to the current writting window
         /// </summary>
         private static void WriteText(string format, string text)
-         {
+        {
             //bool currentWindowAppSupportRTF = CurrentWindowAppSupportRTF(text);
             //text = (!currentWindowAppSupportRTF) ? ParseRTF2PlainText(text) : text;
 

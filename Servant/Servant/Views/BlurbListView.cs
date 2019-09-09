@@ -153,17 +153,16 @@ namespace Servant
         private void EditBlurb()
         {
             BlurbView newBlurb = new BlurbView();
-            newBlurb.id = listView.SelectedItems[0].SubItems[4].Text;
+            string format = listView.SelectedItems[0].SubItems[2].Text;
+            newBlurb.BlurbId = listView.SelectedItems[0].SubItems[4].Text;
             newBlurb.textBoxPattern.Text = listView.SelectedItems[0].SubItems[1].Text;
+            newBlurb.comboBoxFormat.SelectedIndex = newBlurb.comboBoxFormat.FindStringExact(format);
 
-            string patternText = listView.SelectedItems[0].SubItems[2].Text;
-            newBlurb.comboBoxFormat.SelectedIndex = newBlurb.comboBoxFormat.FindStringExact(patternText);
-
-            if (patternText == "Plain Text")
+            if (format == "Plain Text")
             {
                 newBlurb.richTextBoxText.Text = listView.SelectedItems[0].SubItems[3].Text;
             }
-            else if (patternText == "Rich Text Format(RTF)")
+            else if (format == "Rich Text Format (RTF)") 
             {
                 newBlurb.richTextBoxText.Rtf = listView.SelectedItems[0].SubItems[3].Text;
             }
