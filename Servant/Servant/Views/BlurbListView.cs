@@ -10,36 +10,12 @@ namespace Servant
         // List of all the blurb created by the user 
         public static List<string[]> BLURBLIST = new List<string[]>();
 
-        // Random phrases dictionary
-        private Dictionary<int, string> ServantPhrases = new Dictionary<int, string>();
-
         /// <summary>
         /// Class constructor
         /// </summary>
         public BlurbListView()
         {
             InitializeComponent();
-
-            LoadRandomPhrases();
-        }
-
-        /// <summary>
-        /// Method to load the list of random phrases
-        /// </summary>
-        private void LoadRandomPhrases()
-        {
-            ServantPhrases.Add(1, "No lo se Ricardo");
-            ServantPhrases.Add(2, "La respuesta esta en tu corazon");
-            ServantPhrases.Add(3, "Pa pa poom poom pra pra pra");
-            ServantPhrases.Add(4, "Holly Molly!");
-            ServantPhrases.Add(5, "Ahora no joven");
-            ServantPhrases.Add(6, "OSCAR!");
-            ServantPhrases.Add(7, "aagh, agh, aaaaahg....");
-            ServantPhrases.Add(8, "10/10 doble puntaje");
-            ServantPhrases.Add(9, "Me tenes arta!");
-            ServantPhrases.Add(10, "Je je");
-            ServantPhrases.Add(11, "HOLA JP!");
-            ServantPhrases.Add(12, "OK");
         }
 
         /// <summary>
@@ -168,17 +144,6 @@ namespace Servant
             }
 
             InitBlurbView(newBlurb, "Edit blurb");
-        }
-
-        /// <summary>
-        /// Event when the user click the Servant logo
-        /// </summary>
-        private void pictureBoxServantLogo_Click(object sender, EventArgs e)
-        {
-            int randomNumber = new Random().Next(1, 12);
-            string randomPhrase = ServantPhrases[randomNumber];
-
-            new ToolTip().SetToolTip(pictureBoxServantLogo, randomPhrase);
         }
     }
 }

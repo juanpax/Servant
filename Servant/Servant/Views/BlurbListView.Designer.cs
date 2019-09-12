@@ -207,7 +207,6 @@
             this.pictureBoxServantLogo.Size = new System.Drawing.Size(37, 34);
             this.pictureBoxServantLogo.TabIndex = 0;
             this.pictureBoxServantLogo.TabStop = false;
-            this.pictureBoxServantLogo.Click += new System.EventHandler(this.pictureBoxServantLogo_Click);
             // 
             // labelServantState
             // 
