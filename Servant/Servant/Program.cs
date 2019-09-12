@@ -100,7 +100,8 @@ namespace Servant
         {
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYUP)
             {
-                string key = VKCodeToString((uint)Marshal.ReadInt32(lParam));
+                IntPtr currentWindow = GetForegroundWindow();
+                string key = VKCodeToString(currentWindow, (uint)Marshal.ReadInt32(lParam));
 
                 if (key == "\b" && currentString.Length > 0)
                 {
@@ -113,20 +114,18 @@ namespace Servant
 
                     foreach (string[] blurb in BlurbListView.BLURBLIST)
                     {
-                        string pattern = blurb[1];
-
-                        if (pattern == currentString)
+                        if (blurb[1] == currentString)
                         {
                             UnhookWindowsHookEx(_hookID);
 
-                            DeletePattern(pattern);
-                            WriteText(blurb[2], blurb[3]);
+                            DeletePattern(blurb[1]);
+                            WriteText(currentWindow, blurb[2], blurb[3]);
                             currentString = "";
 
                             _hookID = SetHook(_proc);
                             break;
                         }
-                        else if (pattern.StartsWith(currentString))
+                        else if (blurb[1].StartsWith(currentString))
                         {
                             foundPatternMatch = true;
                             break;
@@ -135,7 +134,7 @@ namespace Servant
 
                     if (!foundPatternMatch)
                     {
-                        currentString = "";
+                        currentString = ""; // el error cuando se esta  eliminando y se falla una letra esta aqui, porque basicamente como el patron deja de tener un startswith entonces se limpia el string
                     }
                 }
             }
@@ -158,13 +157,12 @@ namespace Servant
         /// <summary>
         /// Method to get the current key pressed as string format
         /// </summary>
-        public static string VKCodeToString(uint vkCode)
+        public static string VKCodeToString(IntPtr currentHWnd, uint vkCode)
         {
             StringBuilder sbString = new StringBuilder(5);
             byte[] bKeyState = new byte[255];
             bool bKeyStateStatus;
             bool isDead = false;
-            IntPtr currentHWnd = GetForegroundWindow();
             uint currentProcessID;
             uint currentWindowThreadID = GetWindowThreadProcessId(currentHWnd, out currentProcessID);
             uint thisProgramThreadId = GetCurrentThreadId();
@@ -248,14 +246,21 @@ namespace Servant
         /// <summary>
         /// Method to send the blurb text to the current writting window
         /// </summary>
-        private static void WriteText(string format, string text)
+        private static void WriteText(IntPtr currentWindow, string format, string text)
         {
-            //bool currentWindowAppSupportRTF = CurrentWindowAppSupportRTF(text);
-            //text = (!currentWindowAppSupportRTF) ? ParseRTF2PlainText(text) : text;
+            TextDataFormat textFormat = TextDataFormat.Text;
 
-            TextDataFormat textFormat =
-            (format == "Plain Text" /*|| !currentWindowAppSupportRTF*/) ? TextDataFormat.Text :
-            (format == "Rich Text Format (RTF)") ? TextDataFormat.Rtf : TextDataFormat.Text;
+            if (format == "Rich Text Format (RTF)")
+            {
+                if (CurrentWindowAppSupportRTF(currentWindow))
+                {
+                    textFormat = TextDataFormat.Rtf;
+                }
+                else
+                {
+                    text = ParseRTF2PlainText(text);
+                }
+            }
 
             Clipboard.SetText(text, textFormat);
             SendKeys.SendWait("^(v)");
@@ -275,10 +280,28 @@ namespace Servant
         /// <summary>
         /// Method to validate if the current window will support RTF format or not
         /// </summary>
-        private static bool CurrentWindowAppSupportRTF(string text)
+        private static bool CurrentWindowAppSupportRTF(IntPtr handle)
         {
-            return true;
+            const int nChars = 256;
+            StringBuilder Buff = new StringBuilder(nChars);
+
+            if (GetWindowText(handle, Buff, nChars) > 0)
+            {
+                string windowName = Buff.ToString().Trim();
+
+                return
+                    (
+                        windowName.EndsWith("Word") ||
+                        windowName.EndsWith("PowerPoint") ||
+                        windowName.EndsWith("Outlook") ||
+                        windowName.EndsWith("Message (Plain Text)") || // Outlook
+                        windowName.EndsWith("Message (HTML)") || // Outlook
+                        windowName.EndsWith("Message (Rich Text)") // Outlook
+                    );
+            }
+            return false;
         }
+
 
         // DDL methods to get the pressed key
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
@@ -320,5 +343,9 @@ namespace Servant
 
         [DllImport("user32.dll")]
         private static extern int ToUnicodeEx(uint wVirtKey, uint wScanCode, byte[] lpKeyState, [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pwszBuff, int cchBuff, uint wFlags, IntPtr dwhkl);
+
+        // DLL to validate the Window 
+        [DllImport("user32.dll")]
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
     }
 }
