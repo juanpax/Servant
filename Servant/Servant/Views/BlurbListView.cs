@@ -54,6 +54,7 @@ namespace Servant
         private void buttonAddBlurb_Click(object sender, EventArgs e)
         {
             BlurbView newBlurb = new BlurbView();
+            newBlurb.comboBoxFormat.SelectedIndex = newBlurb.comboBoxFormat.FindStringExact("Plain Text");
             InitBlurbView(newBlurb, "Add blurb");
         }
 
@@ -63,7 +64,6 @@ namespace Servant
         private void InitBlurbView(BlurbView newBlurb, string windowTitle)
         {
             newBlurb.labelTitle.Text = windowTitle;
-            newBlurb.comboBoxFormat.SelectedIndex = newBlurb.comboBoxFormat.FindStringExact("Plain Text");
             newBlurb.FormClosed += new FormClosedEventHandler(BlurbView_FormClosed);
             newBlurb.ShowDialog();
         }
