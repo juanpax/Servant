@@ -33,14 +33,32 @@ namespace Servant
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            BlurbListView = new BlurbListView();
-            BlurbListView.roundedButtonPlayPause.Click += new EventHandler(roundedButtonPlayPause_Click);
-            BlurbListView.FormClosed += new FormClosedEventHandler(BlurbListView_FormClosed);
+            if (!IsProcessOpen("Servant"))
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                BlurbListView = new BlurbListView();
+                BlurbListView.roundedButtonPlayPause.Click += new EventHandler(roundedButtonPlayPause_Click);
+                BlurbListView.FormClosed += new FormClosedEventHandler(BlurbListView_FormClosed);
 
-            _hookID = SetHook(_proc);
-            Application.Run(BlurbListView);
+                _hookID = SetHook(_proc);
+                Application.Run(BlurbListView);
+            }
+        }
+
+        /// <summary>
+        /// Method to validate if Servant is already running or not. In case the application is already running so it will not opened twice
+        /// </summary>
+        public static bool IsProcessOpen(string name)
+        {
+            foreach (Process clsProcess in Process.GetProcesses())
+            {
+                if (clsProcess.ProcessName == name)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -301,7 +319,6 @@ namespace Servant
             }
             return false;
         }
-
 
         // DDL methods to get the pressed key
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
