@@ -33,7 +33,7 @@ namespace Servant
         [STAThread]
         static void Main()
         {
-            if (!IsProcessOpen("Servant"))
+            if (GetProcessCount("Servant") == 1)
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
@@ -49,16 +49,18 @@ namespace Servant
         /// <summary>
         /// Method to validate if Servant is already running or not. In case the application is already running so it will not opened twice
         /// </summary>
-        public static bool IsProcessOpen(string name)
+        public static int GetProcessCount(string name)
         {
+            int count = 0; 
+
             foreach (Process clsProcess in Process.GetProcesses())
             {
                 if (clsProcess.ProcessName == name)
                 {
-                    return true;
+                    count++;
                 }
             }
-            return false;
+            return count;
         }
 
         /// <summary>
