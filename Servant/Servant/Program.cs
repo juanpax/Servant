@@ -51,7 +51,7 @@ namespace Servant
         /// </summary>
         public static int GetProcessCount(string name)
         {
-            int count = 0; 
+            int count = 0;
 
             foreach (Process clsProcess in Process.GetProcesses())
             {
@@ -130,31 +130,26 @@ namespace Servant
                 else
                 {
                     currentString += key;
-                    bool foundPatternMatch = false;
 
+                    //blurb[1] = pattern 
                     foreach (string[] blurb in BlurbListView.BLURBLIST)
                     {
-                        if (blurb[1] == currentString)
+                        if (currentString.Length >= blurb[1].Length)
                         {
-                            UnhookWindowsHookEx(_hookID);
+                            string auxCurrentString = currentString.Substring(currentString.Length - blurb[1].Length);
 
-                            DeletePattern(blurb[1]);
-                            WriteText(currentWindow, blurb[2], blurb[3]);
-                            currentString = "";
+                            if (blurb[1] == auxCurrentString)
+                            {
+                                UnhookWindowsHookEx(_hookID);
 
-                            _hookID = SetHook(_proc);
-                            break;
+                                DeletePattern(blurb[1]);
+                                WriteText(currentWindow, blurb[2], blurb[3]);
+                                currentString = "";
+
+                                _hookID = SetHook(_proc);
+                                break;
+                            }
                         }
-                        else if (blurb[1].StartsWith(currentString))
-                        {
-                            foundPatternMatch = true;
-                            break;
-                        }
-                    }
-
-                    if (!foundPatternMatch)
-                    {
-                        currentString = ""; // el error cuando se esta  eliminando y se falla una letra esta aqui, porque basicamente como el patron deja de tener un startswith entonces se limpia el string
                     }
                 }
             }

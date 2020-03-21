@@ -130,6 +130,7 @@
     </Compile>
     <None Include="Resources\pause.png" />
     <None Include="Resources\Servant.png" />
+    <None Include="Resources\reset.png" />
     <Content Include="Resources\start.png" />
     <Content Include="ServantDB.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

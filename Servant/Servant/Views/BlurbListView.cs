@@ -63,7 +63,6 @@ namespace Servant
         /// </summary>
         private void InitBlurbView(BlurbView newBlurb, string windowTitle)
         {
-            newBlurb.labelTitle.Text = windowTitle;
             newBlurb.FormClosed += new FormClosedEventHandler(BlurbView_FormClosed);
             newBlurb.ShowDialog();
         }
