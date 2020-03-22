@@ -51,14 +51,6 @@ namespace Servant
         }
 
         /// <summary>
-        /// Event when the reset button is clicked
-        /// </summary>
-        private void buttonReset_Click(object sender, EventArgs e)
-        {
-            richTextBoxText.Rtf = "";
-        }
-
-        /// <summary>
         /// Event mouse over the pattern information icon
         /// </summary>
         private void pictureBoxPattern_MouseHover(object sender, EventArgs e)
