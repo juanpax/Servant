@@ -41,8 +41,6 @@
             this.comboBoxFormat = new System.Windows.Forms.ComboBox();
             this.pictureBoxFormat = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.buttonReset = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.Strikeout = new System.Windows.Forms.Button();
@@ -57,7 +55,6 @@
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFormat)).BeginInit();
             this.tableLayoutPanel3.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.SuspendLayout();
@@ -214,13 +211,8 @@
             // 
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.Controls.Add(this.panel1, 1, 0);
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.tableLayoutPanel3.Controls.Add(this.buttonSave, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.panel4, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(8, 53);
@@ -229,33 +221,6 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(912, 34);
             this.tableLayoutPanel3.TabIndex = 7;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.buttonReset);
-            this.panel1.Controls.Add(this.buttonSave);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(712, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 34);
-            this.panel1.TabIndex = 7;
-            // 
-            // buttonReset
-            // 
-            this.buttonReset.BackColor = System.Drawing.Color.SteelBlue;
-            this.buttonReset.Dock = System.Windows.Forms.DockStyle.Right;
-            this.buttonReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonReset.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonReset.ForeColor = System.Drawing.Color.White;
-            this.buttonReset.Location = new System.Drawing.Point(33, 0);
-            this.buttonReset.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.buttonReset.Name = "buttonReset";
-            this.buttonReset.Size = new System.Drawing.Size(77, 34);
-            this.buttonReset.TabIndex = 4;
-            this.buttonReset.Text = "Reset";
-            this.buttonReset.UseVisualStyleBackColor = false;
-            this.buttonReset.Click += new System.EventHandler(this.buttonReset_Click);
             // 
             // buttonSave
             // 
@@ -266,10 +231,10 @@
             this.buttonSave.Font = new System.Drawing.Font("Century Gothic", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonSave.ForeColor = System.Drawing.Color.White;
             this.buttonSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSave.Location = new System.Drawing.Point(110, 0);
+            this.buttonSave.Location = new System.Drawing.Point(825, 2);
             this.buttonSave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(90, 34);
+            this.buttonSave.Size = new System.Drawing.Size(84, 30);
             this.buttonSave.TabIndex = 3;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = false;
@@ -285,7 +250,7 @@
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Margin = new System.Windows.Forms.Padding(0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(712, 34);
+            this.panel4.Size = new System.Drawing.Size(822, 34);
             this.panel4.TabIndex = 8;
             // 
             // Strikeout
@@ -367,7 +332,6 @@
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFormat)).EndInit();
             this.tableLayoutPanel3.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panelMain.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -378,7 +342,6 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button buttonReset;
         public System.Windows.Forms.Button buttonSave;
         public System.Windows.Forms.TextBox textBoxPattern;
         public System.Windows.Forms.ComboBox comboBoxFormat;
@@ -387,7 +350,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.PictureBox pictureBoxPattern;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.PictureBox pictureBoxFormat;
         private System.Windows.Forms.Panel panelMain;
