@@ -63,6 +63,36 @@ namespace Servant.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap align_left {
+            get {
+                object obj = ResourceManager.GetObject("align-left", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap align_right {
+            get {
+                object obj = ResourceManager.GetObject("align-right", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap center {
+            get {
+                object obj = ResourceManager.GetObject("center", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap delete {
             get {
                 object obj = ResourceManager.GetObject("delete", resourceCulture);
@@ -86,6 +116,16 @@ namespace Servant.Properties {
         internal static System.Drawing.Bitmap information {
             get {
                 object obj = ResourceManager.GetObject("information", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap justify {
+            get {
+                object obj = ResourceManager.GetObject("justify", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

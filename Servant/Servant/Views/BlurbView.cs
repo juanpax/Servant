@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -15,6 +16,29 @@ namespace Servant
         public BlurbView()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Method to Load default values over the BlurbView
+        /// </summary>
+        private void BlurbView_Load(object sender, EventArgs e)
+        {
+            comboBoxFont.DrawItem += ComboBoxFonts_DrawItem;
+            comboBoxFont.DataSource = FontFamily.Families;
+            comboBoxFontSize.SelectedItem = "11";
+        }
+
+        /// <summary>
+        /// Method to draw each font family value with their own font family style
+        /// </summary>
+        private void ComboBoxFonts_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            var comboBox = (ComboBox)sender;
+            var fontFamily = (FontFamily)comboBox.Items[e.Index];
+            var font = new Font(fontFamily, comboBox.Font.SizeInPoints);
+
+            e.DrawBackground();
+            e.Graphics.DrawString(font.Name, font, Brushes.Black, e.Bounds.X, e.Bounds.Y);
         }
 
         /// <summary>
@@ -95,32 +119,86 @@ namespace Servant
         }
 
         /// <summary>
-        /// Method to apply Bold, Italic, Underline and Strikeout styles over the text
+        /// Method to apply Bold, Italic, Underline and Strikeout styles over selected text
         /// </summary>
         private void buttonApplyStyle_Click(object sender, EventArgs e)
         {
-            string style = ((Button)sender).Name;
+            string styleButton = ((Button)sender).Name;
             FontStyle fontStyle =
-                (style == "Bold") ? FontStyle.Bold :
-                (style == "Italic") ? FontStyle.Italic :
-                (style == "Underline") ? FontStyle.Underline :
-                (style == "Strikeout") ? FontStyle.Strikeout : 
+                (styleButton == "Bold") ? FontStyle.Bold :
+                (styleButton == "Italic") ? FontStyle.Italic :
+                (styleButton == "Underline") ? FontStyle.Underline :
+                (styleButton == "Strikeout") ? FontStyle.Strikeout : 
                 FontStyle.Regular;
 
             string currentStyle = richTextBoxText.SelectionFont.Style.ToString();
 
             Font newFont = 
-                (currentStyle.Contains(style)) ? new Font(richTextBoxText.Font, richTextBoxText.SelectionFont.Style & ~fontStyle) :
+                (currentStyle.Contains(styleButton)) ? new Font(richTextBoxText.Font, richTextBoxText.SelectionFont.Style & ~fontStyle) :
                 new Font(richTextBoxText.Font, richTextBoxText.SelectionFont.Style | fontStyle);
 
+            richTextBoxText.SelectionFont = newFont;
+            ApplyOverSelection();
+        }
+
+        /// <summary>
+        /// Method to apply left, center, right and justify over selected text
+        /// </summary>
+        private void buttonApplyAlignment_Click(object sender, EventArgs e)
+        {
+            string alignmentButton = ((Button)sender).Name;
+            string currentAlignment = richTextBoxText.SelectionAlignment.ToString();
+
+            HorizontalAlignment horizontalAlignment =
+                (alignmentButton == "Left") ? HorizontalAlignment.Left :
+                (alignmentButton == "Center" && currentAlignment == "Center") ? HorizontalAlignment.Left :
+                (alignmentButton == "Center") ? HorizontalAlignment.Center :
+                (alignmentButton == "Right" && currentAlignment == "Right") ? HorizontalAlignment.Left :
+                (alignmentButton == "Right") ? HorizontalAlignment.Right :
+                HorizontalAlignment.Left;
+
+            richTextBoxText.SelectionAlignment = horizontalAlignment;
+            ApplyOverSelection();
+        }
+
+        /// <summary>
+        /// Method to restrict only integers on the font size combobox 
+        /// </summary>
+        private void comboBoxFontSize_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// Method to change font size over selected text 
+        /// </summary>
+        private void comboBoxFontSize_TextChanged(object sender, EventArgs e)
+        {
+            int emSize = int.Parse(comboBoxFontSize.Text);
+            richTextBoxText.SelectionFont = new Font(richTextBoxText.SelectionFont.FontFamily, emSize, richTextBoxText.Font.Style);
+            ApplyOverSelection();
+        }
+
+        /// <summary>
+        /// Method to apply changes (style, alignment, font family and size) over selected text
+        /// </summary>
+        private void ApplyOverSelection()
+        {
             int selstart = richTextBoxText.SelectionStart;
             int sellength = richTextBoxText.SelectionLength;
 
-            richTextBoxText.SelectionFont = newFont;
             richTextBoxText.SelectionStart = richTextBoxText.SelectionStart + richTextBoxText.SelectionLength;
             richTextBoxText.SelectionLength = 0;
-            richTextBoxText.SelectionFont = richTextBoxText.Font;
             richTextBoxText.Select(selstart, sellength);
+        }
+
+        private void Justify_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("This fuctionality is not available yet", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
         }
     }
 }
