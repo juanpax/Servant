@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Servant.Views;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -23,19 +24,19 @@ namespace Servant
         /// </summary>
         private void BlurbView_Load(object sender, EventArgs e)
         {
-            comboBoxFont.DrawItem += ComboBoxFonts_DrawItem;
             comboBoxFont.DataSource = FontFamily.Families;
-            comboBoxFontSize.SelectedItem = "11";
+            comboBoxFont.SelectedIndex = comboBoxFont.FindStringExact("Calibri");
+            comboBoxFontSize.SelectedItem = "11"; 
         }
 
         /// <summary>
         /// Method to draw each font family value with their own font family style
         /// </summary>
-        private void ComboBoxFonts_DrawItem(object sender, DrawItemEventArgs e)
+        private void comboBoxFont_DrawItem(object sender, DrawItemEventArgs e)
         {
-            var comboBox = (ComboBox)sender;
-            var fontFamily = (FontFamily)comboBox.Items[e.Index];
-            var font = new Font(fontFamily, comboBox.Font.SizeInPoints);
+            ComboBox comboBox = (ComboBox)sender;
+            FontFamily fontFamily = (FontFamily)comboBox.Items[e.Index];
+            Font font = new Font(fontFamily, comboBox.Font.SizeInPoints);
 
             e.DrawBackground();
             e.Graphics.DrawString(font.Name, font, Brushes.Black, e.Bounds.X, e.Bounds.Y);
@@ -128,14 +129,14 @@ namespace Servant
                 (styleButton == "Bold") ? FontStyle.Bold :
                 (styleButton == "Italic") ? FontStyle.Italic :
                 (styleButton == "Underline") ? FontStyle.Underline :
-                (styleButton == "Strikeout") ? FontStyle.Strikeout : 
+                (styleButton == "Strikeout") ? FontStyle.Strikeout :
                 FontStyle.Regular;
 
             string currentStyle = richTextBoxText.SelectionFont.Style.ToString();
 
-            Font newFont = 
-                (currentStyle.Contains(styleButton)) ? new Font(richTextBoxText.Font, richTextBoxText.SelectionFont.Style & ~fontStyle) :
-                new Font(richTextBoxText.Font, richTextBoxText.SelectionFont.Style | fontStyle);
+            Font newFont =
+                (currentStyle.Contains(styleButton)) ? new Font(richTextBoxText.SelectionFont, richTextBoxText.SelectionFont.Style & ~fontStyle) :
+                new Font(richTextBoxText.SelectionFont, richTextBoxText.SelectionFont.Style | fontStyle);
 
             richTextBoxText.SelectionFont = newFont;
             ApplyOverSelection();
@@ -177,8 +178,21 @@ namespace Servant
         /// </summary>
         private void comboBoxFontSize_TextChanged(object sender, EventArgs e)
         {
-            int emSize = int.Parse(comboBoxFontSize.Text);
-            richTextBoxText.SelectionFont = new Font(richTextBoxText.SelectionFont.FontFamily, emSize, richTextBoxText.Font.Style);
+            int emSize;
+            if (int.TryParse(comboBoxFontSize.Text, out emSize))
+            {
+                richTextBoxText.SelectionFont = new Font(richTextBoxText.SelectionFont.FontFamily, emSize, richTextBoxText.Font.Style);
+                ApplyOverSelection();
+            }
+        }
+
+        /// <summary>
+        /// Method to change font style over selected text
+        /// </summary>
+        private void comboBoxFont_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FontFamily fontFamily = new FontFamily(comboBoxFont.Text);
+            richTextBoxText.SelectionFont = new Font(fontFamily, richTextBoxText.SelectionFont.Size, richTextBoxText.Font.Style);
             ApplyOverSelection();
         }
 
@@ -195,9 +209,27 @@ namespace Servant
             richTextBoxText.Select(selstart, sellength);
         }
 
+
         private void Justify_Click(object sender, EventArgs e)
         {
             MessageBox.Show("This fuctionality is not available yet", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+        }
+
+        /// <summary>
+        /// Method to start ColorMenu
+        /// </summary>
+        private void buttonFontColor_Click(object sender, EventArgs e)
+        {
+
+            Console.WriteLine(buttonFontColor.Location.X);
+            Console.WriteLine(buttonFontColor.Location.Y);
+
+            ColorMenuView colorMenu = new ColorMenuView();
+            Point p = buttonFontColor.PointToScreen(Point.Empty);
+            p.Y = p.Y + 28;
+            colorMenu.Location = p;
+            colorMenu.Show();
 
         }
     }
