@@ -1,7 +1,8 @@
-﻿using Servant.Views;
+﻿using Servant.Extra;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace Servant
@@ -26,7 +27,7 @@ namespace Servant
         {
             comboBoxFont.DataSource = FontFamily.Families;
             comboBoxFont.SelectedIndex = comboBoxFont.FindStringExact("Calibri");
-            comboBoxFontSize.SelectedItem = "11"; 
+            comboBoxFontSize.SelectedItem = "11";
         }
 
         /// <summary>
@@ -197,6 +198,24 @@ namespace Servant
         }
 
         /// <summary>
+        /// Method to apply color change on the selected text
+        /// </summary>
+        private void buttonFontColor_Click(object sender, EventArgs e)
+        {
+            Point point = buttonFontColor.PointToScreen(Point.Empty);
+
+            using (ColorDialogExtension cd = new ColorDialogExtension(point.X - 5, point.Y + 28, "Color"))
+            {
+                if (cd.ShowDialog() == DialogResult.OK)
+                {
+                    richTextBoxText.SelectionColor = cd.Color;
+                    panelColor.BackColor = cd.Color;
+                    ApplyOverSelection();
+                }
+            }
+        }
+
+        /// <summary>
         /// Method to apply changes (style, alignment, font family and size) over selected text
         /// </summary>
         private void ApplyOverSelection()
@@ -207,30 +226,6 @@ namespace Servant
             richTextBoxText.SelectionStart = richTextBoxText.SelectionStart + richTextBoxText.SelectionLength;
             richTextBoxText.SelectionLength = 0;
             richTextBoxText.Select(selstart, sellength);
-        }
-
-
-        private void Justify_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("This fuctionality is not available yet", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-        }
-
-        /// <summary>
-        /// Method to start ColorMenu
-        /// </summary>
-        private void buttonFontColor_Click(object sender, EventArgs e)
-        {
-
-            Console.WriteLine(buttonFontColor.Location.X);
-            Console.WriteLine(buttonFontColor.Location.Y);
-
-            ColorMenuView colorMenu = new ColorMenuView();
-            Point p = buttonFontColor.PointToScreen(Point.Empty);
-            p.Y = p.Y + 28;
-            colorMenu.Location = p;
-            colorMenu.Show();
-
         }
     }
 }
