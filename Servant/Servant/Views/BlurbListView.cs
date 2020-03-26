@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Servant.Views;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Servant
@@ -9,6 +12,7 @@ namespace Servant
     {
         // List of all the blurb created by the user 
         public static List<string[]> BLURBLIST = new List<string[]>();
+        public Dictionary<string, Color> colors = new Dictionary<string, Color>();
 
         /// <summary>
         /// Class constructor
@@ -31,6 +35,16 @@ namespace Servant
         /// </summary>
         private void BlurbListView_Load(object sender, EventArgs e)
         {
+            colors.Add("SteelBlue", Color.SteelBlue);
+            colors.Add("Firebrick", Color.Firebrick);
+            colors.Add("BurlyWood", Color.BurlyWood);
+            colors.Add("Olive", Color.Olive);
+            colors.Add("Teal", Color.Teal);
+            colors.Add("DarkSlateBlue", Color.DarkSlateBlue);
+            colors.Add("Purple", Color.Purple);
+
+            string backgroundColor = ConfigurationManager.AppSettings["BackgroundColor"];
+            panelMain.BackColor = colors[backgroundColor];
             LoadBlurbList();
         }
 
@@ -53,7 +67,7 @@ namespace Servant
         /// </summary>
         private void buttonAddBlurb_Click(object sender, EventArgs e)
         {
-            BlurbView newBlurb = new BlurbView();
+            BlurbView newBlurb = new BlurbView(panelMain.BackColor);
             newBlurb.comboBoxFormat.SelectedIndex = newBlurb.comboBoxFormat.FindStringExact("Plain Text");
             InitBlurbView(newBlurb, "Add blurb");
         }
@@ -128,7 +142,7 @@ namespace Servant
         /// </summary>
         private void EditBlurb()
         {
-            BlurbView newBlurb = new BlurbView();
+            BlurbView newBlurb = new BlurbView(panelMain.BackColor);
             string format = listView.SelectedItems[0].SubItems[2].Text;
             newBlurb.BlurbId = listView.SelectedItems[0].SubItems[4].Text;
             newBlurb.textBoxPattern.Text = listView.SelectedItems[0].SubItems[1].Text;
@@ -138,12 +152,97 @@ namespace Servant
             {
                 newBlurb.richTextBoxText.Text = listView.SelectedItems[0].SubItems[3].Text;
             }
-            else if (format == "Rich Text Format (RTF)") 
+            else if (format == "Rich Text Format (RTF)")
             {
                 newBlurb.richTextBoxText.Rtf = listView.SelectedItems[0].SubItems[3].Text;
             }
 
             InitBlurbView(newBlurb, "Edit blurb");
+        }
+
+        private void buttonColors_Click(object sender, EventArgs e)
+        {
+            Button btnSender = (Button)sender;
+            Point ptLowerLeft = new Point(0, btnSender.Height);
+            ptLowerLeft = btnSender.PointToScreen(ptLowerLeft);
+            contextMenuStripColors.Show(ptLowerLeft);
+        }
+
+        private void MenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem clickedMenuItem = sender as ToolStripMenuItem;
+            string color = clickedMenuItem.Text;
+            panelMain.BackColor = colors[color];
+
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.AppSettings.Settings["BackgroundColor"].Value = color;
+            config.Save(ConfigurationSaveMode.Modified);
+        }
+
+        private void buttonExport_Click(object sender, EventArgs e)
+        {
+            if (BLURBLIST.Count > 0)
+            {
+                ExportBlurbView exportBlurb = new ExportBlurbView(BLURBLIST, panelMain.BackColor);
+                exportBlurb.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("There are no Blurbs to export", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog theDialog = new OpenFileDialog();
+            theDialog.Title = "Open Text File";
+            theDialog.Filter = "TXT files|*.txt";
+            theDialog.InitialDirectory = @"C:\";
+            if (theDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    if (theDialog.OpenFile() != null)
+                    {
+                        string line1;
+                        StreamReader file = new StreamReader(theDialog.FileName);
+                        int failedImportedBlurbs = 0;
+
+                        while ((line1 = file.ReadLine()) != null)
+                        {
+                            string line2 = file.ReadLine().Trim();
+                            string line3 = file.ReadLine();
+                            // ACORDARSE DE LA LINEA DE ======================
+
+                            bool result = BlurbController.SaveBlurb("", line1, line2, line3);
+                            failedImportedBlurbs += (!result) ? 1 : 0;
+                        }
+
+                        file.Close();
+
+                        if (failedImportedBlurbs == 0)
+                        {
+                            MessageBox.Show("All items were added successfully", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("There was an error adding some items. Please check Servant file content is correct", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method to validate if the blurb information is completed 
+        /// </summary>
+        private bool ValidateBlurb(string pattern, string format, string text)
+        {
+            return (!string.IsNullOrEmpty(pattern) && !string.IsNullOrEmpty(format) && (format == "Plain Text" || format == "Rich Text Format (RTF)") && !string.IsNullOrEmpty(text));
         }
     }
 }

@@ -15,9 +15,10 @@ namespace Servant
         /// <summary>
         /// Class constructor
         /// </summary>
-        public BlurbView()
+        public BlurbView(Color backgroundColor)
         {
             InitializeComponent();
+            panelMain.BackColor = backgroundColor;
         }
 
         /// <summary>
