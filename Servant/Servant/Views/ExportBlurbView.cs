@@ -8,8 +8,12 @@ namespace Servant.Views
 {
     public partial class ExportBlurbView : Form
     {
+        // List of all the blurb created by the user 
         public List<string[]> BLURBLIST = new List<string[]>();
 
+        /// <summary>
+        /// Class constructor
+        /// </summary>
         public ExportBlurbView(List<string[]> BLURBLIST, Color backgroundColor)
         {
             this.BLURBLIST = BLURBLIST;
@@ -17,6 +21,9 @@ namespace Servant.Views
             panelMain.BackColor = backgroundColor;
         }
 
+        /// <summary>
+        /// Method to load default values over the ExportBlurbView
+        /// </summary>
         private void ExportBlurbView_Load(object sender, EventArgs e)
         {
             listView.Items.Clear();
@@ -29,6 +36,9 @@ namespace Servant.Views
             }
         }
 
+        /// <summary>
+        /// Method to open file browser to select the Blurb list location 
+        /// </summary>
         private void buttonFileLocation_Click(object sender, EventArgs e)
         {
             using (var fbd = new FolderBrowserDialog())
@@ -42,6 +52,9 @@ namespace Servant.Views
             }
         }
 
+        /// <summary>
+        /// Method to export all blurbs inside the Servant.txt file
+        /// </summary>
         private void buttonExport_Click(object sender, EventArgs e)
         {
             if (buttonFileLocation.Text != "Select file location..." && listView.CheckedItems.Count > 0)
@@ -58,9 +71,14 @@ namespace Servant.Views
                         fileString += "================================================================= \n";
                     }
                 }
-                //Validate if the file already exist, so replace it 
-                File.AppendAllText(buttonFileLocation.Text, fileString);
-                labelLog.Text = "Blurbs successfully exported in " + buttonFileLocation.Text;
+                
+                File.WriteAllText(buttonFileLocation.Text, fileString);
+                DialogResult dialogResult = MessageBox.Show("All Blurbs successfully exported in " + buttonFileLocation.Text, "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                if (dialogResult == DialogResult.OK)
+                {
+                    Close();
+                }
             }
             else
             {
@@ -68,6 +86,9 @@ namespace Servant.Views
             }
         }
 
+        /// <summary>
+        /// Method to check all items on the blurb ListView
+        /// </summary>
         private void checkBoxSelectAll_CheckedChanged(object sender, EventArgs e)
         {
             foreach (ListViewItem item in listView.Items)

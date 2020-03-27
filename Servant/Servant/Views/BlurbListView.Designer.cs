@@ -38,8 +38,15 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.labelServantState = new System.Windows.Forms.Label();
+            this.roundedButtonPlayPause = new Servant.Extra.RoundedButton();
             this.buttonAddBlurb = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonColor = new System.Windows.Forms.Button();
+            this.buttonImport = new System.Windows.Forms.Button();
+            this.buttonExport = new System.Windows.Forms.Button();
             this.contextMenuStripBlurb = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.panelMain = new System.Windows.Forms.Panel();
             this.contextMenuStripColors = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -50,19 +57,12 @@
             this.tealToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.darkSlateBlueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.purpleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.buttonExport = new System.Windows.Forms.Button();
-            this.buttonImport = new System.Windows.Forms.Button();
-            this.buttonColor = new System.Windows.Forms.Button();
-            this.roundedButtonPlayPause = new Servant.Extra.RoundedButton();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.contextMenuStripBlurb.SuspendLayout();
             this.panelMain.SuspendLayout();
             this.contextMenuStripColors.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView
@@ -132,7 +132,6 @@
             this.panel1.Controls.Add(this.labelServantState);
             this.panel1.Controls.Add(this.roundedButtonPlayPause);
             this.panel1.Controls.Add(this.buttonAddBlurb);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(23, 2);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
@@ -148,6 +147,22 @@
             this.labelServantState.Size = new System.Drawing.Size(306, 28);
             this.labelServantState.TabIndex = 3;
             this.labelServantState.Text = "Servant has been started!";
+            // 
+            // roundedButtonPlayPause
+            // 
+            this.roundedButtonPlayPause.BackgroundImage = global::Servant.Properties.Resources.pause;
+            this.roundedButtonPlayPause.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.roundedButtonPlayPause.Dock = System.Windows.Forms.DockStyle.Left;
+            this.roundedButtonPlayPause.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
+            this.roundedButtonPlayPause.FlatAppearance.BorderSize = 0;
+            this.roundedButtonPlayPause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.roundedButtonPlayPause.Location = new System.Drawing.Point(0, 0);
+            this.roundedButtonPlayPause.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.roundedButtonPlayPause.Name = "roundedButtonPlayPause";
+            this.roundedButtonPlayPause.Size = new System.Drawing.Size(49, 46);
+            this.roundedButtonPlayPause.TabIndex = 2;
+            this.roundedButtonPlayPause.Tag = "Pause";
+            this.roundedButtonPlayPause.UseVisualStyleBackColor = true;
             // 
             // buttonAddBlurb
             // 
@@ -165,6 +180,59 @@
             this.buttonAddBlurb.UseVisualStyleBackColor = false;
             this.buttonAddBlurb.Click += new System.EventHandler(this.buttonAddBlurb_Click);
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.buttonColor);
+            this.panel2.Controls.Add(this.buttonImport);
+            this.panel2.Controls.Add(this.buttonExport);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(20, 368);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(819, 35);
+            this.panel2.TabIndex = 3;
+            // 
+            // buttonColor
+            // 
+            this.buttonColor.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonColor.Dock = System.Windows.Forms.DockStyle.Left;
+            this.buttonColor.Font = new System.Drawing.Font("Century Gothic", 7.2F);
+            this.buttonColor.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.buttonColor.Location = new System.Drawing.Point(0, 0);
+            this.buttonColor.Name = "buttonColor";
+            this.buttonColor.Size = new System.Drawing.Size(90, 35);
+            this.buttonColor.TabIndex = 5;
+            this.buttonColor.Text = "Color ▼";
+            this.buttonColor.UseVisualStyleBackColor = false;
+            this.buttonColor.Click += new System.EventHandler(this.buttonColors_Click);
+            // 
+            // buttonImport
+            // 
+            this.buttonImport.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonImport.Dock = System.Windows.Forms.DockStyle.Right;
+            this.buttonImport.Font = new System.Drawing.Font("Century Gothic", 7.2F);
+            this.buttonImport.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.buttonImport.Location = new System.Drawing.Point(639, 0);
+            this.buttonImport.Name = "buttonImport";
+            this.buttonImport.Size = new System.Drawing.Size(90, 35);
+            this.buttonImport.TabIndex = 4;
+            this.buttonImport.Text = "➥ Import";
+            this.buttonImport.UseVisualStyleBackColor = false;
+            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
+            // 
+            // buttonExport
+            // 
+            this.buttonExport.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonExport.Dock = System.Windows.Forms.DockStyle.Right;
+            this.buttonExport.Font = new System.Drawing.Font("Century Gothic", 7.2F);
+            this.buttonExport.Location = new System.Drawing.Point(729, 0);
+            this.buttonExport.Name = "buttonExport";
+            this.buttonExport.Size = new System.Drawing.Size(90, 35);
+            this.buttonExport.TabIndex = 3;
+            this.buttonExport.Text = "➦ Export";
+            this.buttonExport.UseVisualStyleBackColor = false;
+            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
+            // 
             // contextMenuStripBlurb
             // 
             this.contextMenuStripBlurb.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -173,6 +241,22 @@
             this.deleteToolStripMenuItem});
             this.contextMenuStripBlurb.Name = "contextMenuStrip1";
             this.contextMenuStripBlurb.Size = new System.Drawing.Size(127, 56);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.Image = global::Servant.Properties.Resources.edit;
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(126, 26);
+            this.editToolStripMenuItem.Text = "Edit";
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Image = global::Servant.Properties.Resources.delete;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(126, 26);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // button1
             // 
@@ -196,6 +280,7 @@
             // 
             // contextMenuStripColors
             // 
+            this.contextMenuStripColors.BackColor = System.Drawing.SystemColors.Control;
             this.contextMenuStripColors.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStripColors.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.steelBlueToolStripMenuItem,
@@ -213,134 +298,49 @@
             this.steelBlueToolStripMenuItem.Name = "steelBlueToolStripMenuItem";
             this.steelBlueToolStripMenuItem.Size = new System.Drawing.Size(171, 24);
             this.steelBlueToolStripMenuItem.Text = "SteelBlue";
-            this.steelBlueToolStripMenuItem.Click += new System.EventHandler(this.MenuItem_Click);
+            this.steelBlueToolStripMenuItem.Click += new System.EventHandler(this.ColorMenuItem_Click);
             // 
             // firebrickToolStripMenuItem
             // 
             this.firebrickToolStripMenuItem.Name = "firebrickToolStripMenuItem";
             this.firebrickToolStripMenuItem.Size = new System.Drawing.Size(171, 24);
             this.firebrickToolStripMenuItem.Text = "Firebrick";
-            this.firebrickToolStripMenuItem.Click += new System.EventHandler(this.MenuItem_Click);
+            this.firebrickToolStripMenuItem.Click += new System.EventHandler(this.ColorMenuItem_Click);
             // 
             // burlyWoodToolStripMenuItem
             // 
             this.burlyWoodToolStripMenuItem.Name = "burlyWoodToolStripMenuItem";
             this.burlyWoodToolStripMenuItem.Size = new System.Drawing.Size(171, 24);
             this.burlyWoodToolStripMenuItem.Text = "BurlyWood";
-            this.burlyWoodToolStripMenuItem.Click += new System.EventHandler(this.MenuItem_Click);
+            this.burlyWoodToolStripMenuItem.Click += new System.EventHandler(this.ColorMenuItem_Click);
             // 
             // oliveToolStripMenuItem
             // 
             this.oliveToolStripMenuItem.Name = "oliveToolStripMenuItem";
             this.oliveToolStripMenuItem.Size = new System.Drawing.Size(171, 24);
             this.oliveToolStripMenuItem.Text = "Olive";
-            this.oliveToolStripMenuItem.Click += new System.EventHandler(this.MenuItem_Click);
+            this.oliveToolStripMenuItem.Click += new System.EventHandler(this.ColorMenuItem_Click);
             // 
             // tealToolStripMenuItem
             // 
             this.tealToolStripMenuItem.Name = "tealToolStripMenuItem";
             this.tealToolStripMenuItem.Size = new System.Drawing.Size(171, 24);
             this.tealToolStripMenuItem.Text = "Teal";
-            this.tealToolStripMenuItem.Click += new System.EventHandler(this.MenuItem_Click);
+            this.tealToolStripMenuItem.Click += new System.EventHandler(this.ColorMenuItem_Click);
             // 
             // darkSlateBlueToolStripMenuItem
             // 
             this.darkSlateBlueToolStripMenuItem.Name = "darkSlateBlueToolStripMenuItem";
             this.darkSlateBlueToolStripMenuItem.Size = new System.Drawing.Size(171, 24);
             this.darkSlateBlueToolStripMenuItem.Text = "DarkSlateBlue";
-            this.darkSlateBlueToolStripMenuItem.Click += new System.EventHandler(this.MenuItem_Click);
+            this.darkSlateBlueToolStripMenuItem.Click += new System.EventHandler(this.ColorMenuItem_Click);
             // 
             // purpleToolStripMenuItem
             // 
             this.purpleToolStripMenuItem.Name = "purpleToolStripMenuItem";
             this.purpleToolStripMenuItem.Size = new System.Drawing.Size(171, 24);
             this.purpleToolStripMenuItem.Text = "Purple";
-            this.purpleToolStripMenuItem.Click += new System.EventHandler(this.MenuItem_Click);
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.buttonColor);
-            this.panel2.Controls.Add(this.buttonImport);
-            this.panel2.Controls.Add(this.buttonExport);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(20, 368);
-            this.panel2.Margin = new System.Windows.Forms.Padding(0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(819, 35);
-            this.panel2.TabIndex = 3;
-            // 
-            // buttonExport
-            // 
-            this.buttonExport.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonExport.Dock = System.Windows.Forms.DockStyle.Right;
-            this.buttonExport.Font = new System.Drawing.Font("Century Gothic", 7.2F);
-            this.buttonExport.Location = new System.Drawing.Point(729, 0);
-            this.buttonExport.Name = "buttonExport";
-            this.buttonExport.Size = new System.Drawing.Size(90, 35);
-            this.buttonExport.TabIndex = 3;
-            this.buttonExport.Text = "➦ Export";
-            this.buttonExport.UseVisualStyleBackColor = false;
-            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
-            // 
-            // buttonImport
-            // 
-            this.buttonImport.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonImport.Dock = System.Windows.Forms.DockStyle.Right;
-            this.buttonImport.Font = new System.Drawing.Font("Century Gothic", 7.2F);
-            this.buttonImport.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.buttonImport.Location = new System.Drawing.Point(639, 0);
-            this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(90, 35);
-            this.buttonImport.TabIndex = 4;
-            this.buttonImport.Text = "➥ Import";
-            this.buttonImport.UseVisualStyleBackColor = false;
-            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
-            // 
-            // buttonColor
-            // 
-            this.buttonColor.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonColor.Dock = System.Windows.Forms.DockStyle.Left;
-            this.buttonColor.Font = new System.Drawing.Font("Century Gothic", 7.2F);
-            this.buttonColor.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.buttonColor.Location = new System.Drawing.Point(0, 0);
-            this.buttonColor.Name = "buttonColor";
-            this.buttonColor.Size = new System.Drawing.Size(90, 35);
-            this.buttonColor.TabIndex = 5;
-            this.buttonColor.Text = "Color ▼";
-            this.buttonColor.UseVisualStyleBackColor = false;
-            this.buttonColor.Click += new System.EventHandler(this.buttonColors_Click);
-            // 
-            // roundedButtonPlayPause
-            // 
-            this.roundedButtonPlayPause.BackgroundImage = global::Servant.Properties.Resources.pause;
-            this.roundedButtonPlayPause.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.roundedButtonPlayPause.Dock = System.Windows.Forms.DockStyle.Left;
-            this.roundedButtonPlayPause.FlatAppearance.BorderColor = System.Drawing.Color.SteelBlue;
-            this.roundedButtonPlayPause.FlatAppearance.BorderSize = 0;
-            this.roundedButtonPlayPause.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.roundedButtonPlayPause.Location = new System.Drawing.Point(0, 0);
-            this.roundedButtonPlayPause.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.roundedButtonPlayPause.Name = "roundedButtonPlayPause";
-            this.roundedButtonPlayPause.Size = new System.Drawing.Size(49, 46);
-            this.roundedButtonPlayPause.TabIndex = 2;
-            this.roundedButtonPlayPause.Tag = "Pause";
-            this.roundedButtonPlayPause.UseVisualStyleBackColor = true;
-            // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.Image = global::Servant.Properties.Resources.edit;
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(126, 26);
-            this.editToolStripMenuItem.Text = "Edit";
-            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.Image = global::Servant.Properties.Resources.delete;
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(126, 26);
-            this.deleteToolStripMenuItem.Text = "Delete";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            this.purpleToolStripMenuItem.Click += new System.EventHandler(this.ColorMenuItem_Click);
             // 
             // BlurbListView
             // 
@@ -357,10 +357,10 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.contextMenuStripBlurb.ResumeLayout(false);
             this.panelMain.ResumeLayout(false);
             this.contextMenuStripColors.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

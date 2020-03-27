@@ -41,7 +41,6 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.labelLog = new System.Windows.Forms.Label();
             this.panelMain.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -70,12 +69,13 @@
             this.buttonFileLocation.Dock = System.Windows.Forms.DockStyle.Right;
             this.buttonFileLocation.Font = new System.Drawing.Font("Century Gothic", 7.2F, System.Drawing.FontStyle.Bold);
             this.buttonFileLocation.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.buttonFileLocation.Location = new System.Drawing.Point(315, 15);
+            this.buttonFileLocation.Location = new System.Drawing.Point(259, 15);
             this.buttonFileLocation.Margin = new System.Windows.Forms.Padding(0);
             this.buttonFileLocation.Name = "buttonFileLocation";
-            this.buttonFileLocation.Size = new System.Drawing.Size(187, 29);
+            this.buttonFileLocation.Size = new System.Drawing.Size(243, 29);
             this.buttonFileLocation.TabIndex = 6;
             this.buttonFileLocation.Text = "Select file location...";
+            this.buttonFileLocation.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonFileLocation.UseVisualStyleBackColor = false;
             this.buttonFileLocation.Click += new System.EventHandler(this.buttonFileLocation_Click);
             // 
@@ -111,7 +111,6 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Controls.Add(this.listView, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.labelLog, 1, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(10, 10);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -183,7 +182,7 @@
             // 
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
             this.tableLayoutPanel3.Controls.Add(this.checkBoxSelectAll, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.buttonFileLocation, 1, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -195,14 +194,6 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(502, 44);
             this.tableLayoutPanel3.TabIndex = 4;
-            // 
-            // labelLog
-            // 
-            this.labelLog.AutoSize = true;
-            this.labelLog.Location = new System.Drawing.Point(23, 325);
-            this.labelLog.Name = "labelLog";
-            this.labelLog.Size = new System.Drawing.Size(0, 17);
-            this.labelLog.TabIndex = 9;
             // 
             // ExportBlurbView
             // 
@@ -237,6 +228,5 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Label labelLog;
     }
 }

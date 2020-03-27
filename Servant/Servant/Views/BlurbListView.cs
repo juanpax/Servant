@@ -1,4 +1,5 @@
-﻿using Servant.Views;
+﻿using Servant.Controllers;
+using Servant.Views;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,6 +13,7 @@ namespace Servant
     {
         // List of all the blurb created by the user 
         public static List<string[]> BLURBLIST = new List<string[]>();
+        // List of available background colors
         public Dictionary<string, Color> colors = new Dictionary<string, Color>();
 
         /// <summary>
@@ -43,7 +45,7 @@ namespace Servant
             colors.Add("DarkSlateBlue", Color.DarkSlateBlue);
             colors.Add("Purple", Color.Purple);
 
-            string backgroundColor = ConfigurationManager.AppSettings["BackgroundColor"];
+            string backgroundColor = ColorController.GetColor();         
             panelMain.BackColor = colors[backgroundColor];
             LoadBlurbList();
         }
@@ -160,6 +162,9 @@ namespace Servant
             InitBlurbView(newBlurb, "Edit blurb");
         }
 
+        /// <summary>
+        /// Method to open up the color selection window
+        /// </summary>
         private void buttonColors_Click(object sender, EventArgs e)
         {
             Button btnSender = (Button)sender;
@@ -168,17 +173,20 @@ namespace Servant
             contextMenuStripColors.Show(ptLowerLeft);
         }
 
-        private void MenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Method to change background color from all different views
+        /// </summary>
+        private void ColorMenuItem_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem clickedMenuItem = sender as ToolStripMenuItem;
-            string color = clickedMenuItem.Text;
-            panelMain.BackColor = colors[color];
-
-            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings["BackgroundColor"].Value = color;
-            config.Save(ConfigurationSaveMode.Modified);
+            string selectedColor = clickedMenuItem.Text;
+            panelMain.BackColor = colors[selectedColor];
+            ColorController.SaveColor(selectedColor);
         }
 
+        /// <summary>
+        /// Method to open Blurb export view 
+        /// </summary>
         private void buttonExport_Click(object sender, EventArgs e)
         {
             if (BLURBLIST.Count > 0)
@@ -192,42 +200,44 @@ namespace Servant
             }
         }
 
+        /// <summary>
+        /// Method to import list of Blurb into Servant 
+        /// </summary>
         private void buttonImport_Click(object sender, EventArgs e)
         {
-            OpenFileDialog theDialog = new OpenFileDialog();
-            theDialog.Title = "Open Text File";
-            theDialog.Filter = "TXT files|*.txt";
-            theDialog.InitialDirectory = @"C:\";
-            if (theDialog.ShowDialog() == DialogResult.OK)
+            OpenFileDialog fileDialog = new OpenFileDialog();
+
+            fileDialog.Title = "Open Text File";
+            fileDialog.Filter = "TXT files|*.txt";
+            fileDialog.InitialDirectory = @"C:\";
+            if (fileDialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    if (theDialog.OpenFile() != null)
+                    StreamReader file = new StreamReader(fileDialog.FileName);
+                    int failedImportedBlurbs = 0;
+                    string line1;
+
+                    while ((line1 = file.ReadLine()) != null)
                     {
-                        string line1;
-                        StreamReader file = new StreamReader(theDialog.FileName);
-                        int failedImportedBlurbs = 0;
+                        string line2 = file.ReadLine().Trim();
+                        string line3 = file.ReadLine();
+                        string line4 = file.ReadLine();
 
-                        while ((line1 = file.ReadLine()) != null)
-                        {
-                            string line2 = file.ReadLine().Trim();
-                            string line3 = file.ReadLine();
-                            // ACORDARSE DE LA LINEA DE ======================
+                        bool result = BlurbController.SaveBlurb("", line1, line2, line3);
+                        failedImportedBlurbs += (!result) ? 1 : 0;
+                    }
 
-                            bool result = BlurbController.SaveBlurb("", line1, line2, line3);
-                            failedImportedBlurbs += (!result) ? 1 : 0;
-                        }
+                    file.Close();
+                    LoadBlurbList();
 
-                        file.Close();
-
-                        if (failedImportedBlurbs == 0)
-                        {
-                            MessageBox.Show("All items were added successfully", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("There was an error adding some items. Please check Servant file content is correct", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                    if (failedImportedBlurbs == 0)
+                    {
+                        MessageBox.Show("All items has been added successfully", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("There was an error adding some items. Please check Servant file content is correct", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 catch (Exception ex)
@@ -235,14 +245,7 @@ namespace Servant
                     MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
                 }
             }
-        }
-
-        /// <summary>
-        /// Method to validate if the blurb information is completed 
-        /// </summary>
-        private bool ValidateBlurb(string pattern, string format, string text)
-        {
-            return (!string.IsNullOrEmpty(pattern) && !string.IsNullOrEmpty(format) && (format == "Plain Text" || format == "Rich Text Format (RTF)") && !string.IsNullOrEmpty(text));
+            fileDialog.Dispose();
         }
     }
 }

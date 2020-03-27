@@ -1,8 +1,6 @@
 ﻿using Servant.Extra;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace Servant
@@ -22,7 +20,7 @@ namespace Servant
         }
 
         /// <summary>
-        /// Method to Load default values over the BlurbView
+        /// Method to load default values over the BlurbView
         /// </summary>
         private void BlurbView_Load(object sender, EventArgs e)
         {

@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BlurbController.cs" />
+    <Compile Include="Controllers\ColorController.cs" />
     <Compile Include="Extra\ColorDialogExtension.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -90,6 +91,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Models\BlurbModel.cs" />
+    <Compile Include="Models\ColorModel.cs" />
     <Compile Include="Models\DBConnection.cs" />
     <Compile Include="Views\BlurbListView.cs">
       <SubType>Form</SubType>
@@ -142,14 +144,14 @@
     </Compile>
     <None Include="Resources\pause.png" />
     <None Include="Resources\Servant.png" />
-    <None Include="Resources\reset.png" />
     <None Include="Resources\align-left.png" />
     <None Include="Resources\align-right.png" />
     <None Include="Resources\center.png" />
     <None Include="Resources\justify.png" />
+    <Content Include="ServantVariables.txt" />
     <Content Include="Resources\start.png" />
     <Content Include="ServantDB.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Servant_TemporaryKey.pfx" />
   </ItemGroup>

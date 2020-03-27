@@ -24,12 +24,13 @@ namespace Servant.Models
                 DataSet dataset = new DataSet();
                 sqliteAdapter.Fill(dataset);
                 dataTable = dataset.Tables[0];
-                SQLiteConnection.Close();
             }
             catch (Exception ex)
             {
                 // Do something to manage the exceptions
             }
+
+            SQLiteConnection.Close();
 
             return dataTable;
         }
@@ -62,12 +63,11 @@ namespace Servant.Models
                 sql_cmd.CommandText = query;
                 sql_cmd.ExecuteNonQuery();
                 SQLiteConnection.Close();
-
                 return true;
             }
             catch (Exception ex)
             {
-                // Do something to manage the exceptions
+                SQLiteConnection.Close();
             }
 
             return false;
